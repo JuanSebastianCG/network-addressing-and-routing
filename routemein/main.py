@@ -3,18 +3,39 @@ from Library.RmiAddressingLib import addressingHandler as adr
 from Library.RmiIPv4Lib import IPv4 as ip
 
 
+from Library.devices.RmiHostDevice import HostDevice as hd
+from Library.devices.RmiRouterDevice import RouterDevice as rd
 
-""" print(bnh.int_to_bin(255))
+from Library.conections.RmiFastEthernet import FastEthernet as fc
+from Library.conections.RmiWanConection import WanConection as wc
 
-print(bnh.sum('10000', '10000'))
 
-for i in range(256):
-    print(ip(i, i, i, i))
+""" ------------pureba disporitivos----------------- """
 
-print(ip(254, 254, 254, 254).get_binary_string())
-one = ip(254, 254, 254, 254)
-one.set_ip_value_binary_str('11111100111111001111110011111100')
-print(one) """
+hosts = [3,201,23] 
+hosts =  sorted(hosts, reverse=True)
+
+ipAd = adr.addressing(hosts, ip(200, 30, 4, 255 ))
+""" print(adr.showAddressing(ipAd,hosts)) """
+
+router = rd("router1")
+router1 = rd("router2")
+
+
+
+host1 = hd("host1",hosts[0], ipAd[0]) 
+host2 = hd("host2",hosts[1], ipAd[1]) 
+
+
+wan1 = wc(router, router1, ip(200, 30, 4, 0))
+wan2 = wc(router, router1, ip(200, 30, 4, 0))
+wan2 = wc(router, router1, ip(200, 30, 4, 0))
+wan3 = fc(host1, router1)
+
+
+print("------------------")
+print(host1)
+print(router1)
 
 
 """ ----------pureba mascara, wildcard y subredes-------------- """
@@ -29,7 +50,7 @@ print (one.increaseSubclass(1)) """
  
 """ ----------prueba direccionamiento--------------------------- """
 
-hosts = [3,201,23] 
+""" hosts = [3,201,23] 
 ipAd = adr.addressing(hosts, ip(200, 30, 4, 255 ))
 print(adr.showAddressing(ipAd,hosts))
 
@@ -42,7 +63,7 @@ print(adr.showAddressing(ipAd,hosts))
 hosts = [120,501,1200,16] 
 ipAd = adr.addressing(hosts, ip(130, 10, 255, 0))
 print(adr.showAddressing(ipAd,hosts))
-
+ """
 
  
  

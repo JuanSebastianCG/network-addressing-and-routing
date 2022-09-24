@@ -12,7 +12,7 @@ class IPv4:
         self.check_ip()
 
     def __str__(self) -> string:
-        return str(self.ipV4[0])+'.'+str(self.ipV4[1])+'.'+str(self.ipV4[2])+'.'+str(self.ipV4[3])
+        return str(self.ipV4[0])+'.'+str(self.ipV4[1])+'.'+str(self.ipV4[2])+'.'+str(self.ipV4[3])+ '/' + str(self.mask)
 
 
     """ check if the ip is of type int and if it is greater than 0 and less than 255"""
@@ -53,10 +53,16 @@ class IPv4:
     
     """
     def increaseSubclass(self, increase: int):
-        
         auxIp = IPv4(self.ipV4[0], self.ipV4[1], self.ipV4[2], self.ipV4[3], self.mask)
         for i in range(increase): 
             auxIp = bnh.sum(auxIp.get_binary_string(),'1'+bnh.zerosIp[:32 - auxIp.mask] )
+            auxIp = self.create_new_ip_from_string(auxIp, self.mask)
+        return auxIp
+    
+    def increaseHost(self, increase: int):
+        auxIp = IPv4(self.ipV4[0], self.ipV4[1], self.ipV4[2], self.ipV4[3], self.mask)
+        for i in range(increase): 
+            auxIp = bnh.sum(auxIp.get_binary_string(),"1" )
             auxIp = self.create_new_ip_from_string(auxIp, self.mask)
         return auxIp
     
