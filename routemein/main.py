@@ -13,30 +13,32 @@ from Library.conections.RmiWanConection import WanConection as wc
 
 """ ------------pureba disporitivos----------------- """
 
-hosts = [3,201,23] 
+hosts = [4500,831,428,17] 
 hosts =  sorted(hosts, reverse=True)
 
-ipAd = adr.addressing(hosts, ip(200, 30, 4, 255 ))
-""" print(adr.showAddressing(ipAd,hosts)) """
+ipAd = adr.addressing(hosts, ip(128, 10, 0, 0 ))
 
-router = rd("router1")
+
+print(ipAd[0].getAllData())
+print(ipAd[1].getAllData())
+print(ipAd[2].getAllData())
+print(ipAd[3].getAllData())
+
+
+""" router = rd("router1")
 router1 = rd("router2")
-
-
 
 host1 = hd("host1",hosts[0], ipAd[0]) 
 host2 = hd("host2",hosts[1], ipAd[1]) 
 
-
 wan1 = wc(router, router1, ip(200, 30, 4, 0))
-wan2 = wc(router, router1, ip(200, 30, 4, 0))
+
 fast = fc(host1, router1)
 
 
-print("------------------")
-print(host1)
+print(router)
 print(router1)
-
+ """
 
 """ ----------pureba mascara, wildcard y subredes-------------- """
 

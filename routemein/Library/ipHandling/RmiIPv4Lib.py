@@ -1,4 +1,6 @@
 from cgi import print_arguments
+from gc import callbacks
+from operator import ge
 import string
 from webbrowser import get
 
@@ -70,13 +72,27 @@ class IPv4:
 
     """------------------------------------------getters---------------------------------------------  """
 
-
+    def getAllData(self) -> string:
+        text = 'IP: '+str(self)+'\n'
+        text += 'Class: '+self.getClassIp()+'\n'
+        text += 'Mask: '+self.getMaskIp()+'\n'
+        text += 'Wildcard: '+self.getWildcard()+'\n'
+        text += 'hosts available : '+str(self.getHosts()-2)+"  redavailable :"+str(self.getAvailableRed())+'\n'
+        return text
 
     def getHosts(self) -> int:
         return 2**(32-self.mask)
     
-    def getRed(self) -> string:
-        return 2**(self.mask)
+    def getAvailableRed(self) -> string:
+        classIp = self.getClassIp()
+        availableIp : int 
+        if classIp == 'A':
+            availableIp = 2**(self.mask-3)
+        elif classIp == 'B':
+            availableIp = 2**(self.mask-2)
+        elif classIp == 'C':
+            availableIp = 2**(self.mask-1)
+        return availableIp
     
     def getClassIp(self) -> string: 
         if self.mask <= 255  and self.mask >= 0:
@@ -106,9 +122,10 @@ class IPv4:
     def getMaskIp(self) -> string:
         ip = ''
         limit =  self.mask//8 
+        
         for i in range(self.ipV4.__len__()):
             if i == limit:
-                ip += str(255+1-self.getHosts())
+                ip += str(bnh.bin_to_int(bnh.ones[:self.mask - limit*8]+bnh.zeros[:8-(self.mask - limit*8)]))
             elif i<limit:
                 ip += '255'
             else:

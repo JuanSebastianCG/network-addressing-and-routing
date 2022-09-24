@@ -4,6 +4,7 @@ import string
 class binaryNumbersHandler:
     
     zeros='00000000'
+    ones='11111111'
     zerosIp ='00000000000000000000000000000000'
 
 
