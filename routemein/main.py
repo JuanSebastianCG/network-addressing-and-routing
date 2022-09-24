@@ -1,6 +1,7 @@
-from Library.RmiBinaryNumbersLib import binaryNumbersHandler as bnh
+
 from Library.RmiAddressingLib import addressingHandler as adr
-from Library.RmiIPv4Lib import IPv4 as ip
+from Library.ipHandling.RmiBinaryNumbersLib import binaryNumbersHandler as bnh
+from Library.ipHandling.RmiIPv4Lib import IPv4 as ip
 
 
 from Library.devices.RmiHostDevice import HostDevice as hd
@@ -29,8 +30,7 @@ host2 = hd("host2",hosts[1], ipAd[1])
 
 wan1 = wc(router, router1, ip(200, 30, 4, 0))
 wan2 = wc(router, router1, ip(200, 30, 4, 0))
-wan2 = wc(router, router1, ip(200, 30, 4, 0))
-wan3 = fc(host1, router1)
+fast = fc(host1, router1)
 
 
 print("------------------")

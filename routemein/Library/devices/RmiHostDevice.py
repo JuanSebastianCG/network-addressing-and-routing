@@ -3,7 +3,7 @@ import string
 
 
 from Library.devices.RmiDevice import Device
-from Library.RmiIPv4Lib import IPv4 as ip
+from Library.ipHandling.RmiIPv4Lib import IPv4 as ip
 from Library.ports.RmiPortManage import Port as port
 
 

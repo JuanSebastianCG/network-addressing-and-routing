@@ -3,7 +3,7 @@ import string
 from webbrowser import get
 
 
-from Library.RmiBinaryNumbersLib import binaryNumbersHandler as bnh
+from Library.ipHandling.RmiBinaryNumbersLib import binaryNumbersHandler as bnh
 
 class IPv4:
     def __init__(self, oct1: int, oct2: int, oct3: int, oct4: int, mask: int = 8):

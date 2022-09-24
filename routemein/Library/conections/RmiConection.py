@@ -4,7 +4,7 @@ from operator import ipow
 import string
 
 from Library.devices.RmiDevice import Device
-from Library.RmiIPv4Lib import IPv4 as ip
+from Library.ipHandling.RmiIPv4Lib import IPv4 as ip
 
 class Conection:
     

@@ -1,8 +1,8 @@
 import imp
 import string
 
-from Library.RmiBinaryNumbersLib import binaryNumbersHandler as bnh
-from Library.RmiIPv4Lib import IPv4 as ip
+from Library.ipHandling.RmiBinaryNumbersLib import binaryNumbersHandler as bnh
+from Library.ipHandling.RmiIPv4Lib import IPv4 as ip
 
 class addressingHandler:
 

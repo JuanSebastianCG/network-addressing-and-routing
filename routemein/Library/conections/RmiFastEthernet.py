@@ -5,7 +5,7 @@ import string
 from Library.devices.RmiDevice import Device
 from Library.devices.RmiHostDevice import HostDevice
 from Library.devices.RmiRouterDevice import RouterDevice
-from Library.RmiIPv4Lib import IPv4 as ip
+
 
 from Library.conections.RmiConection import Conection
 
