@@ -40,7 +40,7 @@ fastEthernetConection = [
                 ]
 
 
-print(rth.addressingRipV4(routers)) 
+""" print(rth.addressingRipV4(routers))  """
 print(rth.addressingOSPF(routers)) 
 
 """ print(routers[0]) """

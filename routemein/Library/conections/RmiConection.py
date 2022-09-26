@@ -13,10 +13,12 @@ from Library.ports.RmiPortManage import Port
 """ this parent class is created to provide a base for connection types like wan and fastetherned """
 class Conection:
     
-   def __init__(self, device1: Device, device2: Device, port1 = None, port2 =None, ip1 = None, ip2 = None):
+   def __init__(self, device1: Device, device2: Device, area , port1 = None, port2 =None, ip1 = None, ip2 = None):
       
       self.ip1 = ip2
       self.ip2 = ip1
+      
+      self.area = area
       
       self.port1 = port1
       self.port2 = port2
@@ -25,8 +27,9 @@ class Conection:
       self.device2 = device2
       
    def __str__(self) -> string:
-
-      text = "Device conection: " + self.device1.name +'  '+self.port1.name+'<--------------------->'+self.port2.name+'  '+self.device2.name+"\n"
+      text = ""
+      text += "Area: "+self.area+"\n"
+      text += "Device conection: " + self.device1.name +'  '+self.port1.name+'<--------------------->'+self.port2.name+'  '+self.device2.name+"\n"
       return text
    
    """ allows devices added to the connection to update their due slots"""

@@ -13,7 +13,7 @@ from Library.conections.RmiConection import Conection
 
 class FastEthernet(Conection):
 
-    def __init__(self, device1: Device, device2: Device):
+    def __init__(self, device1: Device, device2: Device, area = 0):
         
         """ verify that the connection is from router to pc """
         ip1 = None
@@ -32,7 +32,7 @@ class FastEthernet(Conection):
         
         
       
-        super().__init__(device1, device2, FastEthernet.selectPorts(self,device1,"start"),FastEthernet.selectPorts(self,device2,"end"),ip1,ip2)
+        super().__init__(device1, device2, area ,FastEthernet.selectPorts(self,device1,"start"),FastEthernet.selectPorts(self,device2,"end"),ip1,ip2)
     
         
         

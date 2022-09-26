@@ -11,14 +11,14 @@ from Library.conections.RmiConection import Conection
 
 class WanConection(Conection):
 
-    def __init__(self, device1: Device, device2: Device, ipWan: ip):
+    def __init__(self, device1: Device, device2: Device, ipWan: ip, area = 0):
         
         
         if (device1 == device2):
             raise Exception("WanConection: The devices are the same")
 
         """ taking into account the parent ip assigns an ipa to each connection without taking the broadcast or network """
-        super().__init__(device1, device2, 
+        super().__init__(device1, device2, area,
                          WanConection.selectPorts(self,device1,"start"),
                          WanConection.selectPorts(self,device2,"end"),  
                          ipWan.increaseHost(1),
