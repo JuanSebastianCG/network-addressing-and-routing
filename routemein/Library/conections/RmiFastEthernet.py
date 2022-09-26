@@ -16,32 +16,41 @@ class FastEthernet(Conection):
     def __init__(self, device1: Device, device2: Device):
         
         """ verify that the connection is from router to pc """
-        if (type(device1) == HostDevice and type(device2) == RouterDevice):
-            self.ipHosts = device1.assignedIp
-        elif (type(device1) == RouterDevice and type(device2) == HostDevice):
-            self.ipHosts = device2.assignedIp
-        else:
-            raise Exception("Error: The devices are not compatible")
+        ip1 = None
+        ip2 = None
         
-        """ update device ports """
-        self.portFastEthernet1 = FastEthernet.selectPorts(device1,device2)
-        self.portFastEthernet2 = FastEthernet.selectPorts(device2,device1)
-        self.ipAssignedToHost = self.ipHosts.increaseHost(1)
-
-        super().__init__(device1, device2)
+        if (type(device1) == HostDevice and type(device2) == RouterDevice):
+            ip1 = device1.assignedIp
+            ip2 = ip1.increaseHost(1)
+        elif (type(device1) == RouterDevice and type(device2) == HostDevice):
+            ip2 = device2.assignedIp
+            ip1 = ip2.increaseHost(1)
+        elif ( device1 == device2):
+            raise Exception("FastEthernetConection: The devices are the same")
+        else:
+            raise Exception("FastEthernetConection: The devices are not compatible")
+        
+        
+      
+        super().__init__(device1, device2, FastEthernet.selectPorts(self,device1,"start"),FastEthernet.selectPorts(self,device2,"end"),ip1,ip2)
+    
         
         
     def __str__(self) -> string:
         text = "" 
-        text += "ipHosts: " + str(self.ipHosts) + "\n"
-        text += "ipRouter: " + str(self.ipAssignedToHost) + "\n"
-        text += "   Device conection: " + self.device1.name+'  '+ self.portFastEthernet1.name+' <-------------> '+self.portFastEthernet2.name+" "+self.device2.name+"\n"
+        if (type(self.device1) == HostDevice and type(self.device2) == RouterDevice):
+            text += "ipHosts: " + str(self.ip1) + "\n"
+            text += "ipRouter: " + str(self.ip2) + "\n"       
+        elif (type(self.device1) == RouterDevice and type(self.device2) == HostDevice):
+            text += "ipHosts: " + str(self.ip2) + "\n"
+            text += "ipRouter: " + str(self.ip1) + "\n"  
+        text += super().__str__()
         return text
 
-    def selectPorts(device1,device2):
-        
+
+    def selectPorts(self,device1,portHubication): 
         for port in device1.fastEthernetPorts:
             if port.isFree:
-                port.addDevice(device2,"fastEthernet")
+                port.addDevice(self,portHubication)
                 return port
         raise Exception("Error: The device has no free fastEthernet ports")

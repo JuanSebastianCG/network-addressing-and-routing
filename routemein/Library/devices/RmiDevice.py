@@ -10,6 +10,7 @@ class Device:
     
     def __init__(self ,name, fastEthernetPorts ):
         self.name = name
+        """ add fastEthernetPorts ports if the user does not provide them """
         if fastEthernetPorts == None: self.fastEthernetPorts = [port("0/0", True)]
         else: self.fastEthernetPorts = fastEthernetPorts
     
@@ -25,21 +26,21 @@ class Device:
     def showPorts(self, arrayPort):
         text = "" 
         for port in arrayPort:  
-            text += str(port)
-            """ check if any port is connected and show it if so """
-            ipConected = self.lookForTherPortConected(port)
-            if ipConected != None:
-                text += " " + ipConected.name +"\n"
-            else:
-                text += "\n"     
+            text += str(port) + "\n"
         return text 
     
-    """ if the port is connected it will go looking for which device is connected to the other side """
-    def lookForTherPortConected(self, port):
-        if port.isFree == False:
-           for conectedPort in port.device.fastEthernetPorts:
-               if(conectedPort.device == self):
-                   return conectedPort
+    """ returns all port conected """
+    def portsConected(self,portConected = []):
+        for port in self.fastEthernetPorts:
+            if port.isFree == False:
+                portConected.append(port) 
+      
+        return portConected
+    
+    
+    
+
+    
             
             
             

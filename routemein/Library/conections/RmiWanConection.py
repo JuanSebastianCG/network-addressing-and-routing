@@ -12,29 +12,31 @@ from Library.conections.RmiConection import Conection
 class WanConection(Conection):
 
     def __init__(self, device1: Device, device2: Device, ipWan: ip):
+        
+        
+        if (device1 == device2):
+            raise Exception("WanConection: The devices are the same")
 
-        """ update ports of connected devices """
-        self.portSerial1 = WanConection.selectPorts(device1,device2)
-        self.portSerial2 = WanConection.selectPorts(device2,device1)
-        
         """ taking into account the parent ip assigns an ipa to each connection without taking the broadcast or network """
-        self.ipWan1 = ipWan.increaseHost(1)
-        self.ipWan2 = ipWan.increaseHost(2)
+        super().__init__(device1, device2, 
+                         WanConection.selectPorts(self,device1,"start"),
+                         WanConection.selectPorts(self,device2,"end"),  
+                         ipWan.increaseHost(1),
+                         ipWan.increaseHost(2))
         
-        super().__init__(device1, device2)
 
     def __str__(self) -> string:
         text = ""
-        text += "ipWan1: " + str(self.ipWan1) + "\n"
-        text += "ipWan2: " + str(self.ipWan2) + "\n"
-        text += "   Device conection: " + self.device1.name+'  '+ self.portSerial1.name+' <-------------> '+self.portSerial2.name+" "+self.device2.name+"\n"
+        text += "ipWan1: " + str(self.ip1) + "\n"
+        text += "ipWan2: " + str(self.ip2) + "\n"
+        text += super().__str__()
         
         return text
 
 
-    def selectPorts(device1,device2):
+    def selectPorts(self,device1,portHubication):
         for port in device1.serialPorts:
             if port.isFree:    
-                port.addDevice(device2,"wan")
+                port.addDevice(self,portHubication)
                 return port
         raise Exception("Error: The device has no free serial ports")
