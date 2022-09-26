@@ -15,7 +15,9 @@ class HostDevice(Device):
         super().__init__(name, fastEthernetPorts)
 
     def __str__(self) -> string:
-        text = "Hosts: " + str(self.hosts) + "\n"
-        text += "Assigned Ip: " + str(self.assignedIp) + "\n"
+        text = "" 
         text += super().__str__()
+        text += "   Hosts: " + str(self.hosts) + "\n"
+        text += "   Assigned Ip: " + str(self.assignedIp) + "\n"
         return text
+    

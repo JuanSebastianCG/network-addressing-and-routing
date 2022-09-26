@@ -19,26 +19,25 @@ hosts =  sorted(hosts, reverse=True)
 ipAd = adr.addressing(hosts, ip(128, 10, 0, 0 ))
 
 
-print(ipAd[0].getAllData())
-print(ipAd[1].getAllData())
-print(ipAd[2].getAllData())
-print(ipAd[3].getAllData())
 
-
-""" router = rd("router1")
-router1 = rd("router2")
+router = rd("router0")
+router1 = rd("router1")
+router2 = rd("router3")
 
 host1 = hd("host1",hosts[0], ipAd[0]) 
 host2 = hd("host2",hosts[1], ipAd[1]) 
 
 wan1 = wc(router, router1, ip(200, 30, 4, 0))
+wan2 = wc(router, router2, ip(200, 30, 4, 0))
 
 fast = fc(host1, router1)
+fast2 = fc(host2, router)
 
 
 print(router)
-print(router1)
- """
+print(wan1)
+print(wan2)
+
 
 """ ----------pureba mascara, wildcard y subredes-------------- """
 
