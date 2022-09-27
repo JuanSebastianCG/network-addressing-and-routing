@@ -56,7 +56,8 @@ class addressingHandler:
         hosts =  sorted(hosts, reverse=True)
         addressing  = ""
         for i in range(len(list)):    
-            addressing += "host "+str(hosts[i])+" : "+str(list[i])+" mask: "+str(list[i].mask)+"\n"    
+            addressing += "host "+str(hosts[i])+"\n"    
+            addressing += list[i].getAllData()+"\n"
         return  addressing
     
    

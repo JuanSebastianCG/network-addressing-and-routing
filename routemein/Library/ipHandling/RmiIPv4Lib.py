@@ -107,7 +107,7 @@ class IPv4:
         text += 'Class: '+self.getClassIp()+'\n'
         text += 'Mask: '+self.getMaskIp()+'\n'
         text += 'Wildcard: '+self.getWildcard()+'\n'
-        text += 'hosts available : '+str(self.getHosts()-2)+"  redavailable :"+str(self.getAvailableRed())+'\n'
+        text += 'hosts available : '+str(self.getHosts()-2)+"  red available :"+str(self.getAvailableRed())+'\n'
         return text
 
     def getHosts(self) -> int:
