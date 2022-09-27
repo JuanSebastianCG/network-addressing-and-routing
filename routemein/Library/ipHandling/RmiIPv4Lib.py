@@ -1,7 +1,7 @@
-from cgi import print_arguments
+import string
+import random
 from gc import callbacks
 from operator import ge
-import string
 from webbrowser import get
 
 
@@ -37,8 +37,30 @@ class IPv4:
     """Creates an IP object from a string of an IP in binary. """
     @staticmethod
     def create_new_ip_from_string(binary_str: str, mask: int) -> 'IPv4':
-        
        return IPv4(int(binary_str[:8], 2), int(binary_str[8:16], 2), int(binary_str[16:24], 2), int(binary_str[24:32],  2),mask)
+   
+    """ generates an ip given a mask """
+    @staticmethod
+    def generateIp(mask: int):
+        firstOct = []
+        secondOct = []
+        """C"""
+        if mask <= 255  and mask >= 0:  
+            firstOct = [192, 255]
+            secondOct = [168, 168]
+
+            """ class B """
+        elif mask <= 65535 and mask >= 256: 
+            firstOct = [10, 171]
+            secondOct = [16, 255]
+        
+            """ class A """
+        elif mask <= 16777215 and mask >= 65536: 
+            firstOct = [10, 171]
+            secondOct = [16, 31]
+        
+        return  IPv4(random.randint(firstOct[0],firstOct[1]), random.randint(secondOct[0],secondOct[1]), 0, 0, mask)
+        
         
     
     
@@ -47,8 +69,7 @@ class IPv4:
     
          Parameters
         ----------
-        increase : str
-            allows us to determine which subclass we want to increase
+        increase : int // how many subclasse we want to increase
         Raises
         ------
         NotImplementedError
@@ -61,14 +82,23 @@ class IPv4:
             auxIp = self.create_new_ip_from_string(auxIp, self.mask)
         return auxIp
     
+    """
+    returns one ip plus the number of hosts that we want to increase
+    
+         Parameters
+        ----------
+        increase : inthow many hosts we want to increase
+        ------
+        NotImplementedError
+    
+    """
     def increaseHost(self, increase: int):
         auxIp = IPv4(self.ipV4[0], self.ipV4[1], self.ipV4[2], self.ipV4[3], self.mask)
         for i in range(increase): 
             auxIp = bnh.sum(auxIp.get_binary_string(),"1" )
             auxIp = self.create_new_ip_from_string(auxIp, self.mask)
         return auxIp
-    
-        
+
 
     """------------------------------------------getters---------------------------------------------  """
 

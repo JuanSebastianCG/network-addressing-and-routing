@@ -1,11 +1,13 @@
 from ast import For
 
 import imp
+from pickle import NONE
 import string
+from telnetlib import IP
 
 
-from  Library.ports.RmiPortManage import Port
-from  Library.ipHandling import RmiIPv4Lib as ip
+from Library.RmiAddressingLib import addressingHandler as addressing
+from Library.ipHandling.RmiIPv4Lib import IPv4 as ip
 
 
 
@@ -93,13 +95,7 @@ class routingHandler:
             text += "\n"
         
         return text
-
-   
-        
-    
   
-        
-        
         
     """ searches through branches if the device to find is on the network. and returns the ports of that router """  
     @staticmethod
@@ -112,17 +108,16 @@ class routingHandler:
             roadTraveled.append(lastDevice)
         else:
             roadTraveled = []
-
-        
-        """ si ya no hay mas dispositivos por donde seguir """
+            
+        """ if the device dont have more conections """
         if actualDevicesPort == None: return None
         
         for port in actualDevicesPort:
             conectedDevice = port.conectedDevice()
             
-            """ si el puerto es diferente que el de la rama anterior """
+            """ if the device is difertent to the last device """
             if conectedDevice == lastDevice: continue    
-            """ si encontro el dispositivo-+ """
+            """ device found """
             print("actualDevice: "+str(actualDevice.name)+" conectedDevice: "+str(conectedDevice.name)+" deviceToLook: "+str(deviceToLook.name)+" len: "+str(actualDevicesPort))
             if conectedDevice == deviceToLook:
                 foundPath.append(port.portActual())
@@ -135,6 +130,30 @@ class routingHandler:
 
 
         return foundPath
+    
+    """ generate necessary ips for aggregation to a wan connection
+    
+         Parameters
+        ----------
+        amountOf : int // amount of wan connections
+        inicIp : ip // ip to start the wan connections ( opcional )
+        minHost : int // minimum amount of hosts to be able to connect to the wan ( opcional )
+        ------
+    """
+    def wanGenerator(amountOf: int,inicIp: ip = None, minHost = None):
+        
+        wanIps = []
+        if minHost == None and inicIp == None: 
+            inicIp = ip.generateIp(addressing.findMask(amountOf))
+        elif inicIp == None and minHost != None:
+            inicIp = ip.generateIp(addressing.findMask(minHost))
+        
+        for i in range(amountOf):
+            wanIps.append(inicIp.increaseSubclass(i))
+            
+        return wanIps
+
+          
     
     
         

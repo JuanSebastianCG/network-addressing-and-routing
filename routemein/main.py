@@ -21,73 +21,53 @@ from Library.conections.RmiWanConection import WanConection as wc
 hosts = [122,13,312] 
 hosts =  sorted(hosts, reverse=True)
 
-ipAd = adr.addressing(hosts, ip(129, 10, 0, 0 ))
+""" addressing(hosts, ip (opcional)) """
+ipAd = adr.addressing(hosts)
+"""  wanGenerator(wan numbers, base ip (optional), 4(number of hosts per wan))"""
+wan = rth.wanGenerator(3,None,4)
 
-""" for i in range(len(ipAd)):
-    print(ipAd[i].getAllData())
-print(adr.showAddressing(ipAd,hosts))
- """
 
+
+""" rd(nombre del dispositivo) """
 routers = [rd("r0"),
            rd("r1"),
            rd("r2")]
 
+
+""" hd ( nombre, Numero de host// ejem: 400, assigned ip(red)) """
 hosts = [hd("host0",hosts[0], ipAd[0]) ,
          hd("host1 ",hosts[1], ipAd[1]) ,
          hd("host2",hosts[2], ipAd[2])  ]
 
+
+""" connection order matters!! """
+""" wc( dispositivo1, dispositivo 2 ,assigned ip(red)) """
 wanConection = [
-                wc(routers[0], routers[1], ip(200, 10, 4, 0,29)),
-                wc(routers[1], routers[2], ip(200, 10, 4, 8,29)),
-                wc(routers[2], routers[0], ip(200, 10, 4, 16,29)),    
+                wc(routers[0], routers[1], wan[0]),
+                wc(routers[1], routers[2], wan[1]),
+                wc(routers[2], routers[0], wan[2]),    
                 ]
 
+""" connection order matters!! """
+""" fc( dispositivo1, dispositivo 2) """
 fastEthernetConection = [
                 fc(hosts[0], routers[0]),
                 fc(hosts[1], routers[1]),     
                 fc(hosts[2], routers[2]),     
                 ]
 
-print(rth.basicConfiguration(routers)) 
 
+""" for i in range(len(ipAd)):
+    print(ipAd[i].getAllData())
+print(adr.showAddressing(ipAd,hosts))
+ """
 
+""" print(rth.basicConfiguration(routers)) """ 
 """ print(rth.addressingRipV4(routers))  """
 """ print(rth.addressingOSPF(routers))  """
 """ print(rth.addresingStatic(routers,hosts)) """
 
 
 
-
-
-""" ----------pureba mascara, wildcard y subredes-------------- """
-
-""" one = ip(192, 10, 253, 10,30)
-one.oct3 = bnh.addEspecificOne(one.ipV4[3], 7)  
-print (one)
-print (one.getMaskIp())  
-print (one.getWildcard())  
-print (one.increaseSubclass(1)) """
-
- 
-""" ----------prueba direccionamiento--------------------------- """
-
-""" hosts = [3,201,23] 
-ipAd = adr.addressing(hosts, ip(200, 30, 4, 255 ))
-print(adr.showAddressing(ipAd,hosts))
-
-
-hosts = [48,1000,2100,10] 
-ipAd = adr.addressing(hosts, ip(140, 27, 0, 0))
-print(adr.showAddressing(ipAd,hosts))
-
-
-hosts = [120,501,1200,16] 
-ipAd = adr.addressing(hosts, ip(130, 10, 255, 0))
-print(adr.showAddressing(ipAd,hosts))
- """
-
- 
- 
- 
  
  

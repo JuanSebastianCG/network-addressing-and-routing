@@ -29,6 +29,7 @@ class Device:
             text += str(port) + "\n"
         return text 
     
+    """ returns all connected fastethernet ports """
     def fastEthernetPortsConected(self):
         portConected = []
         for port in self.fastEthernetPorts:

@@ -33,7 +33,17 @@ class Conection:
       text += "Device conection: " + self.device1.name +'  '+self.port1.name+'<--------------------->'+self.port2.name+'  '+self.device2.name+"\n"
       return text
    
-   """ allows devices added to the connection to update their due slots"""
+   
+   """ allows devices added to the connection to update their due slots
+   
+   parameters
+   ----------
+   device: Device // the device that will be updated
+   portHubication: string // the direcion of the port in the device
+
+   -----------
+   
+   """
    def selectPorts(self,device,portHubication): 
       pass
       

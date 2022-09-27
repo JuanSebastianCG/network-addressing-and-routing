@@ -20,10 +20,10 @@ class FastEthernet(Conection):
         ip2 = None
         
         if (type(device1) == HostDevice and type(device2) == RouterDevice):
-            ip1 = device1.assignedIp
+            ip1 = device1.assignedIp.increaseHost(2)
             ip2 = ip1.increaseHost(1)
         elif (type(device1) == RouterDevice and type(device2) == HostDevice):
-            ip2 = device2.assignedIp
+            ip2 = device2.assignedIp.increaseHost(2)
             ip1 = ip2.increaseHost(1)
         elif ( device1 == device2):
             raise Exception("FastEthernetConection: The devices are the same")

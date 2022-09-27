@@ -31,6 +31,8 @@ class RouterDevice(Device):
                 
         return super().portsConected(portConected)
     
+    
+    """ returns all connected serial ports """
     def serialsPortsConected(self):
         portConected = []
         for port in self.serialPorts:

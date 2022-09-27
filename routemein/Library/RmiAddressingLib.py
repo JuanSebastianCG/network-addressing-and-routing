@@ -21,14 +21,20 @@ class addressingHandler:
     
     """
     @staticmethod
-    def addressing(list, initialIp: ip) :
+    def addressing(list, initialIp: ip = None) :
         list =  sorted(list, reverse=True)
         addresingIP = []   
         
-        for i in range(len(list)):        
+        if initialIp == None:
+            initialIp = ip.generateIp(addressingHandler.findMask(list[0]))
+        
+     
+        for i in range(len(list)):
+              
             initialIp.mask = addressingHandler.findMask(list[i])
             addresingIP.append(initialIp)
             initialIp = initialIp.increaseSubclass(1)
+
            
         return addresingIP
       
@@ -38,7 +44,7 @@ class addressingHandler:
     def findMask(number: int) -> int:
         mask = 1
         for i in range(2, 25):
-            if number < 2**i-2:
+            if number <= (2**i)-2:
                 mask = 32-i
                 break
         

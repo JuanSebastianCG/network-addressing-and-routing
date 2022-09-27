@@ -11,6 +11,7 @@ class Port:
         self.isFree = isFree
         
         self.conection = None
+        """ this attribute allows you to see if the device is to the right or left of the connection, metaphorically speaking """
         self.portHubication = None
         
         
