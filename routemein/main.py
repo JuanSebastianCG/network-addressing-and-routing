@@ -16,7 +16,7 @@ from Library.conections.RmiWanConection import WanConection as wc
 
 
 
-""" ------------pureba disporitivos----------------- """
+""" ------------test Zone----------------- """
 
 hosts = [122,13,312] 
 hosts =  sorted(hosts, reverse=True)
@@ -30,13 +30,13 @@ wan = rth.wanGenerator(3,None,4)
 print(adr.showAddressing(ipAd,hosts))
 
 
-""" rd(nombre del dispositivo) """
+""" rd(name of the device) """
 routers = [rd("r0"),
            rd("r1"),
            rd("r2")]
 
 
-""" hd ( nombre, Numero de host// ejem: 400, assigned ip(red)) """
+""" hd (name, host number// ex: 400, assigned ip(red))"""
 hosts = [hd("host0",hosts[0], ipAd[0]) ,
          hd("host1 ",hosts[1], ipAd[1]) ,
          hd("host2",hosts[2], ipAd[2])  ]
