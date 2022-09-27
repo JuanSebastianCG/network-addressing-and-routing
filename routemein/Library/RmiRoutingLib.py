@@ -86,12 +86,14 @@ class routingHandler:
 
         text = ""        
         for router in routers:
+            text += "--------- router "+str(router.name)+" ------------\n"
             for host in hosts:
                 
                 wayFound = routingHandler.shortPathStaticRouting(host,router)
                 
                 for way in wayFound:
-                    text += "ip route "+str(host.assignedIp)+" "+str(host.assignedIp.getWildcard())+" "+str(way.ipActual())+"\n"
+                    if str(host.assignedIp.increaseHost(2)) != str(way.ipActual()):
+                        text += "ip route "+str(host.assignedIp)+" "+str(host.assignedIp.getWildcard())+" "+str(way.ipActual())+"\n"
             text += "\n"
         
         return text
@@ -118,7 +120,7 @@ class routingHandler:
             """ if the device is difertent to the last device """
             if conectedDevice == lastDevice: continue    
             """ device found """
-            print("actualDevice: "+str(actualDevice.name)+" conectedDevice: "+str(conectedDevice.name)+" deviceToLook: "+str(deviceToLook.name)+" len: "+str(actualDevicesPort))
+            """  print("actualDevice: "+str(actualDevice.name)+" conectedDevice: "+str(conectedDevice.name)+" deviceToLook: "+str(deviceToLook.name)+" len: "+str(actualDevicesPort)) """
             if conectedDevice == deviceToLook:
                 foundPath.append(port.portActual())
             else:  

@@ -27,8 +27,8 @@ ipAd = adr.addressing(hosts)
 wan = rth.wanGenerator(3,None,4)
 
 
-print(adr.showAddressing(ipAd,hosts))
-
+""" print(adr.showAddressing(ipAd,hosts))
+ """
 
 """ rd(name of the device) """
 routers = [rd("r0"),
@@ -46,7 +46,6 @@ hosts = [hd("host0",hosts[0], ipAd[0]) ,
 """ wc( dispositivo1, dispositivo 2 ,assigned ip(red)) """
 wanConection = [
                 wc(routers[0], routers[1], wan[0]),
-                wc(routers[1], routers[2], wan[1]),
                 wc(routers[2], routers[0], wan[2]),    
                 ]
 
@@ -61,8 +60,8 @@ fastEthernetConection = [
 
 """ print(rth.basicConfiguration(routers)) """ 
 """ print(rth.addressingRipV4(routers))  """
-print(rth.addressingOSPF(routers)) 
-""" print(rth.addresingStatic(routers,hosts)) """
+""" print(rth.addressingOSPF(routers))  """
+print(rth.addresingStatic(routers,hosts))
 
 
 
