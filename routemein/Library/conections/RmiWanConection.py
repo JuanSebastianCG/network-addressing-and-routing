@@ -34,8 +34,8 @@ class WanConection(Conection):
         return text
 
 
-    def selectPorts(self,device1,portHubication):
-        for port in device1.serialPorts:
+    def selectPorts(self,device,portHubication):
+        for port in device.serialPorts:
             if port.isFree:    
                 port.addDevice(self,portHubication)
                 return port

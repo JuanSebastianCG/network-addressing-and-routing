@@ -30,3 +30,12 @@ class RouterDevice(Device):
                 portConected.append(port)
                 
         return super().portsConected(portConected)
+    
+    def serialsPortsConected(self):
+        portConected = []
+        for port in self.serialPorts:
+            if port.isFree == False:
+                portConected.append(port)
+                
+        return portConected
+        

@@ -18,32 +18,44 @@ from Library.conections.RmiWanConection import WanConection as wc
 
 """ ------------pureba disporitivos----------------- """
 
-hosts = [4500,831,428,17] 
+hosts = [122,13,312] 
 hosts =  sorted(hosts, reverse=True)
 
-ipAd = adr.addressing(hosts, ip(128, 10, 0, 0 ))
+ipAd = adr.addressing(hosts, ip(129, 10, 0, 0 ))
 
+""" for i in range(len(ipAd)):
+    print(ipAd[i].getAllData())
 print(adr.showAddressing(ipAd,hosts))
+ """
 
-routers = [rd("r0"),rd("r1"),rd("r2")]
+routers = [rd("r0"),
+           rd("r1"),
+           rd("r2")]
 
-hosts = [hd("host1",hosts[0], ipAd[0]) ,hd("host2",hosts[1], ipAd[1])  ]
+hosts = [hd("host0",hosts[0], ipAd[0]) ,
+         hd("host1 ",hosts[1], ipAd[1]) ,
+         hd("host2",hosts[2], ipAd[2])  ]
 
 wanConection = [
-                wc(routers[0], routers[1], ip(200, 30, 4, 0)),
-                wc(routers[1], routers[2], ip(200, 30, 4, 4)),    
+                wc(routers[0], routers[1], ip(200, 10, 4, 0,29)),
+                wc(routers[1], routers[2], ip(200, 10, 4, 8,29)),
+                wc(routers[2], routers[0], ip(200, 10, 4, 16,29)),    
                 ]
 
 fastEthernetConection = [
                 fc(hosts[0], routers[0]),
-                fc(hosts[1], routers[2]),     
+                fc(hosts[1], routers[1]),     
+                fc(hosts[2], routers[2]),     
                 ]
+
+print(rth.basicConfiguration(routers)) 
 
 
 """ print(rth.addressingRipV4(routers))  """
-print(rth.addressingOSPF(routers)) 
+""" print(rth.addressingOSPF(routers))  """
+""" print(rth.addresingStatic(routers,hosts)) """
 
-""" print(routers[0]) """
+
 
 
 

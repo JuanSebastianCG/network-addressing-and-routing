@@ -48,8 +48,8 @@ class FastEthernet(Conection):
         return text
 
 
-    def selectPorts(self,device1,portHubication): 
-        for port in device1.fastEthernetPorts:
+    def selectPorts(self,device,portHubication): 
+        for port in device.fastEthernetPorts:
             if port.isFree:
                 port.addDevice(self,portHubication)
                 return port

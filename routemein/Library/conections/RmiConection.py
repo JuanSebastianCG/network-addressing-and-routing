@@ -26,13 +26,14 @@ class Conection:
       self.device1 = device1
       self.device2 = device2
       
+     
    def __str__(self) -> string:
-      text = ""
-      text += "Area: "+self.area+"\n"
+      text = "\n"
+      text += "Area: "+str(self.area)+"\n"
       text += "Device conection: " + self.device1.name +'  '+self.port1.name+'<--------------------->'+self.port2.name+'  '+self.device2.name+"\n"
       return text
    
    """ allows devices added to the connection to update their due slots"""
-   def selectPorts(device1, device2):
+   def selectPorts(self,device,portHubication): 
       pass
       

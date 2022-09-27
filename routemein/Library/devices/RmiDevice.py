@@ -29,8 +29,18 @@ class Device:
             text += str(port) + "\n"
         return text 
     
+    def fastEthernetPortsConected(self):
+        portConected = []
+        for port in self.fastEthernetPorts:
+            if port.isFree == False:
+                portConected.append(port) 
+      
+        return portConected
+    
     """ returns all port conected """
     def portsConected(self,portConected = []):
+        if len(portConected) == 0: portConected = []
+        
         for port in self.fastEthernetPorts:
             if port.isFree == False:
                 portConected.append(port) 
