@@ -11,7 +11,7 @@ class Device:
     def __init__(self ,name, fastEthernetPorts ):
         self.name = name
         """ add fastEthernetPorts ports if the user does not provide them """
-        if fastEthernetPorts == None: self.fastEthernetPorts = [port("0/0", True)]
+        if fastEthernetPorts == None: self.fastEthernetPorts = [port("0/0")]
         else: self.fastEthernetPorts = fastEthernetPorts
     
     def __str__(self) -> string:

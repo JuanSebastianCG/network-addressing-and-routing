@@ -113,6 +113,10 @@ class IPv4:
     def getHosts(self) -> int:
         return 2**(32-self.mask)
     
+    def getOnlyIp(self):
+        return str(self.ipV4[0])+'.'+str(self.ipV4[1])+'.'+str(self.ipV4[2])+'.'+str(self.ipV4[3])
+        
+    
     def getAvailableRed(self) -> string:
         classIp = self.getClassIp()
         availableIp : int 

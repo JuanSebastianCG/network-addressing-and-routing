@@ -10,7 +10,7 @@ class RouterDevice(Device):
 
     def __init__(self, name: string,  serialPorts: port = None, fastEthernetPorts: port = None):
         """ add serial ports if the user does not provide them """
-        if serialPorts == None: self.serialPorts = [port("0/0", True), port("0/1", True)]
+        if serialPorts == None: self.serialPorts = [port("0/0"), port("0/1")]
         else: self.serialPorts = serialPorts
             
         super().__init__(name, fastEthernetPorts)

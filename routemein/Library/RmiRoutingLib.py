@@ -29,18 +29,19 @@ class routingHandler:
             portFastethernet = router.fastEthernetPortsConected()
             for port in portFastethernet:
                 text += "interface fastethernet "+str(port.name)+"\n"
-            text += "ip addres "+ str(port.ipConected())+" "+str(port.ipConected().getMaskIp())+"\n"
+            text += "ip addres "+ str(port.ipConected().getOnlyIp())+" "+str(port.ipConected().getMaskIp())+"\n"
             text += "no shutdown\n"
             text += "exit\n"
 
             portSerial = router.serialsPortsConected()
             for port in portSerial:
                 text += "interface serial "+str(port.name)+"\n"
-                text += "ip addres "+ str(port.ipConected())+" "+str(port.ipConected().getMaskIp())+"\n"
+                text += "ip addres "+ str(port.ipConected().getOnlyIp())+" "+str(port.ipConected().getMaskIp())+"\n"
                 if port.portHubication == "start":
                     text += "clock rate 250000\n"
-            text += "no shutdown\n"
-            text += "exit\n"  
+                text += "no shutdown\n"
+                text += "exit\n"
+            
             text += "\n"   
             
   
@@ -54,10 +55,11 @@ class routingHandler:
         for router in routers:
             text += "--------- router "+str(router.name)+" ------------\n"
             text += "router Rip\n"
+            text += "version 2\n"
             devicesConected = router.portsConected()
             
             for device in devicesConected:
-                text += "network "+str(device.ipConected())+"\n"
+                text += "network "+str(device.ipConected().getOnlyIp())+"\n"
             text += "exit\n\n"
             
   
@@ -75,7 +77,7 @@ class routingHandler:
             
             for device in devicesConected:
                 ipConected = device.ipConected()
-                text += "network "+str(ipConected)+" "+str(ipConected.getWildcard())+" area "+str(device.conection.area)+"\n"
+                text += "network "+str(ipConected.getOnlyIp())+" "+str(ipConected.getWildcard())+" area "+str(device.conection.area)+"\n"
             text += "exit\n\n"
             
         return text
