@@ -21,3 +21,4 @@ class HostDevice(Device):
         text += "   Assigned Ip: " + str(self.assignedIp) + "\n"
         return text
     
+  

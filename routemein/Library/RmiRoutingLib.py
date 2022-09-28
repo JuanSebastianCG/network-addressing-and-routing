@@ -156,7 +156,20 @@ class routingHandler:
             wanIps.append(inicIp.increaseSubclass(i))
             
         return wanIps
-
+    
+    
+    def showConections(GroupOfDevices):
+        text = ""  
+          
+        for devices in GroupOfDevices:
+            for device in devices:
+                text += "--------- router "+str(device.name)+" ------------\n"
+                for portsConected in device.allPorts():
+                    text += str(portsConected)+"\n"
+                text += "\n"
+            
+        return text
+            
           
     
     

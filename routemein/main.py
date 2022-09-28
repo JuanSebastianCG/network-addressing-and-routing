@@ -1,17 +1,21 @@
 
+""" addresing and routing """
 from Library.RmiAddressingLib import addressingHandler as adr
 from Library.RmiRoutingLib import routingHandler as rth
 
-
+""" ip management """
 from Library.ipHandling.RmiBinaryNumbersLib import binaryNumbersHandler as bnh
 from Library.ipHandling.RmiIPv4Lib import IPv4 as ip
 
-from Library.ports import RmiPortManage as port
+""" port """
+from Library.ports.RmiPortManage import Port as port
 
 
+""" devices """
 from Library.devices.RmiHostDevice import HostDevice as hd
 from Library.devices.RmiRouterDevice import RouterDevice as rd
 
+""" conections """
 from Library.conections.RmiFastEthernet import FastEthernet as fc
 from Library.conections.RmiWanConection import WanConection as wc
 
@@ -29,12 +33,12 @@ ipAd = adr.addressing(hosts,ip(198,168,0,0,29))
 wan = rth.wanGenerator(3,ip(192,168,0,0,29))
 
 
-print(adr.showAddressing(ipAd,hosts))
+""" print(adr.showAddressing(ipAd,hosts)) """
 """ for i in wan:
     print(i) """
 
 
-""" rd(name of the device, serial port ejem: [port("0/0"),port("0/2")], fasethernet port :  [port("0/0"),port("0/2")]  ) """
+""" rd(name of the device, serial port ejem: [port("0/0"),port("0/2")], fasethernet port ejem:  [port("0/0"),port("0/2")]  ) """
 routers = [rd("router0"),
            rd("router1"),
            rd("router2")]
@@ -47,24 +51,25 @@ hosts = [hd("host0",hosts[0], ipAd[0]) ,
 
 
 """ connection order matters!! """
-""" wc( dispositivo1, dispositivo 2 ,assigned ip(red), portDispositivo1(opcional), portDispositivo2(opcionale)) """
+""" wc( dispositivo1, dispositivo 2 ,zona,assigned ip(red), portDispositivo1(opcional), portDispositivo2(opcional)) """
 wanConection = [
-                wc(routers[0], routers[1], wan[0]),
-                wc(routers[1], routers[2], wan[1]),
-                wc(routers[2], routers[0], wan[2]),    
+                wc(routers[0], routers[1], wan[0], 0,"0/1", "0/1"),
+                wc(routers[1], routers[2], wan[1],0),
+                wc(routers[2], routers[0], wan[2],0),    
                 ]
 
 """ connection order matters!! """
 """ fc( dispositivo1, dispositivo 2, portDispositivo1(opcional), portDispositivo2(opcionale)) """
 fastEthernetConection = [
-                fc(hosts[0], routers[0]),
-                fc(hosts[1], routers[1]),     
-                fc(hosts[2], routers[2]),     
+                fc(hosts[0], routers[0],0),
+                fc(hosts[1], routers[1],0),     
+                fc(hosts[2], routers[2],0),     
                 ]
 
 
-print(rth.basicConfiguration(routers)) 
-print(rth.addressingRipV4(routers)) 
+print(rth.showConections([routers, hosts])) ; """  show all conection of the devices """
+""" print(rth.basicConfiguration(routers))  """
+""" print(rth.addressingRipV4(routers))  """
 """ print(rth.addressingOSPF(routers))  """
 """ print(rth.addresingStatic(routers,hosts)) """
 

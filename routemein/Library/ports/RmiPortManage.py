@@ -17,12 +17,14 @@ class Port:
         
     def __str__(self) -> string:
         text =""
-    
         if self.conection != None:
             if self.portHubication == "end":
                 text += self.conection.port2.name +"  "+self.actualDevice().name+" <--------> Device Conected: " +  self.conectedDevice().name + " Port: " + self.name 
             elif self.portHubication == "start":
                 text += self.name +"  "+self.actualDevice().name+ " <--------> Device Conected: " + self.conectedDevice().name + " Port: " + self.conection.port2.name
+        else:
+            text += self.name+ " <--------> Device Conected: None"
+   
         return  text
         
     def addDevice(self,conection,portHubication):

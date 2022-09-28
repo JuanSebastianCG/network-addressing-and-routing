@@ -8,7 +8,7 @@ from Library.ports.RmiPortManage import Port as port
 
 class RouterDevice(Device):
 
-    def __init__(self, name: string,  serialPorts: port = None, fastEthernetPorts: port = None):
+    def __init__(self, name: string,  serialPorts= None, fastEthernetPorts= None):
         """ add serial ports if the user does not provide them """
         if serialPorts == None: self.serialPorts = [port("0/0"), port("0/1")]
         else: self.serialPorts = serialPorts
@@ -31,6 +31,10 @@ class RouterDevice(Device):
                 
         return super().portsConected(portConected)
     
+    def allPorts(self, addPort = []):
+        auxArray = addPort
+        addPort = [] 
+        return super().allPorts( auxArray+self.serialPorts)
     
     """ returns all connected serial ports """
     def serialsPortsConected(self):

@@ -5,6 +5,7 @@ import string
 from Library.ports.RmiPortManage import Port as port
 
 
+
 """ this class is taken as parent to represent devices like routers or computers """
 class Device:
     
@@ -47,7 +48,11 @@ class Device:
                 portConected.append(port) 
       
         return portConected
-    
+
+    def allPorts(self, addPort = []):
+        auxArray = addPort
+        addPort = [] 
+        return auxArray+self.fastEthernetPorts
     
     
 
