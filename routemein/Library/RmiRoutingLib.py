@@ -29,9 +29,9 @@ class routingHandler:
             portFastethernet = router.fastEthernetPortsConected()
             for port in portFastethernet:
                 text += "interface fastethernet "+str(port.name)+"\n"
-            text += "ip addres "+ str(port.ipConected().getOnlyIp())+" "+str(port.ipConected().getMaskIp())+"\n"
-            text += "no shutdown\n"
-            text += "exit\n"
+                text += "ip addres "+ str(port.ipConected().getOnlyIp())+" "+str(port.ipConected().getMaskIp())+"\n"
+                text += "no shutdown\n"
+                text += "exit\n"
 
             portSerial = router.serialsPortsConected()
             for port in portSerial:
@@ -135,6 +135,8 @@ class routingHandler:
 
         return foundPath
     
+    
+    """ --------------------------------------------------------------------------------------------------------- """
     """ generate necessary ips for aggregation to a wan connection
     
          Parameters
