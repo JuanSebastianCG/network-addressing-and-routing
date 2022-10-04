@@ -52,12 +52,19 @@ class addressingHandler:
     
     """ properly shows the addressing, taking into account the array of hosts and assigned routes """
     @staticmethod
-    def showAddressing(list,hosts) -> str:
-        hosts =  sorted(hosts, reverse=True)
+    def showAddressing(list,device) -> str:
+        device =  sorted(device, reverse=True)
         addressing  = ""
         for i in range(len(list)):    
-            addressing += "host "+str(hosts[i])+"\n"    
+            addressing += "name "+str(device[i])+"\n"    
             addressing += list[i].getAllData()+"\n"
         return  addressing
+    
+    """ take a list of ips and return a list of strings with the ips plus one host """
+    @staticmethod
+    def addAHostToIps(ips):
+        for i in range(len(ips)):
+            ips[i] = ips[i].increaseHost(1)
+        
     
    

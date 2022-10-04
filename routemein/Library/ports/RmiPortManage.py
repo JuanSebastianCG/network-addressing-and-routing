@@ -32,6 +32,11 @@ class Port:
         self.conection = conection
         self.portHubication = portHubication
         
+        
+    def getJustNumber(self):
+        number =  self.name.split("/")
+        return number
+        
     def actualDevice(self):
         if self.portHubication == "start":
             return self.conection.device1

@@ -72,7 +72,7 @@ class routingHandler:
         text = ""
         for router in routers:
             text += "--------- router "+str(router.name)+" ------------\n"
-            text += "router ospf \n"
+            text += "router ospf 1\n"
             devicesConected = router.portsConected()
             
             for device in devicesConected:
