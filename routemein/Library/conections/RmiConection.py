@@ -15,8 +15,8 @@ class Conection:
     
    def __init__(self, device1: Device, device2: Device, area , port1 = None, port2 =None, ip1 = None, ip2 = None):
       
-      self.ip1 = ip2
-      self.ip2 = ip1
+      self.ip1 = ip1
+      self.ip2 = ip2
       
       self.area = area
       
@@ -30,20 +30,31 @@ class Conection:
    def __str__(self) -> string:
       text = "\n"
       text += "Area: "+str(self.area)+"\n"
-      text += "Device conection: " + self.device1.name +'  '+self.port1.name+'<--------------------->'+self.port2.name+'  '+self.device2.name+"\n"
+      text += "Device conection: " + self.device1.name +' '+str(self.ip1)+'  '+self.port1.name+'<--------------------->'+self.port2.name+' '+str(self.ip2)+'  '+self.device2.name+"\n"
       return text
    
-   
-   """ allows devices added to the connection to update their due slots
-   
-   parameters
-   ----------
-   device: Device // the device that will be updated
-   portHubication: string // the direcion of the port in the device
 
-   -----------
-   
-   """
-   def selectPorts(self,device,portHubication): 
-      pass
       
+   def searchPortRange(self,device,portHubication, min, max):
+        for port in device.fastEthernetPorts:
+            number = port.getJustNumber()
+            if port.isFree and number >= min and number <= max:
+                port.addDevice(self,portHubication)
+                return port
+        raise Exception("Error: The device has no free fastEthernet ports or the port name is not correct")
+   
+   def searchPort(self,device,portHubication, portName):
+      for port in device.fastEthernetPorts:
+         if port.isFree and port.name == portName:
+               port.addDevice(self,portHubication)
+               return port
+      raise Exception("Error: The device has no free fastEthernet ports or the port name is not correct")
+         
+    
+   def selectPorts(self,device,portHubication): 
+      for port in device.fastEthernetPorts:
+         if port.isFree:
+               port.addDevice(self,portHubication)
+               return port
+      raise Exception("Error: The device has no free fastEthernet ports")
+   

@@ -28,6 +28,7 @@ class routingHandler:
     
             portFastethernet = router.fastEthernetPortsConected()
             for port in portFastethernet:
+   
                 text += "interface fastethernet "+str(port.name)+"\n"
                 text += "ip addres "+ str(port.ipConected().getOnlyIp())+" "+str(port.ipConected().getMaskIp())+"\n"
                 text += "no shutdown\n"
@@ -81,6 +82,31 @@ class routingHandler:
             text += "exit\n\n"
             
         return text
+    
+    
+    @staticmethod
+    def addressingRipv2OSPF(routers)->string:
+        
+        text = ""
+        for router in routers:
+            text += "--------- router "+str(router.name)+" --<----------\n"
+            text += "router ospf 1\n"
+            devicesConected = router.portsConected()
+            for device in devicesConected:
+                ipConected = device.ipConected()
+                text += "network "+str(ipConected.getOnlyIp())+" "+str(ipConected.getWildcard())+" area "+str(device.conection.area)+"\n"
+            text += "redistribute rip metric 200 subnet\n"
+            text += "exit\n\n"
+            
+            text += "router Rip\n"
+            text += "version 2\n"
+            for device in devicesConected:
+                text += "network "+str(device.ipConected().getOnlyIp())+"\n"
+            text += "redistribute ospf 1 metric 1\n"
+            text += "exit\n\n"
+                 
+        return text
+        
     
     
     @staticmethod

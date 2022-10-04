@@ -63,8 +63,9 @@ class addressingHandler:
     """ take a list of ips and return a list of strings with the ips plus one host """
     @staticmethod
     def addAHostToIps(ips):
+        ispPlusOneHost = []
         for i in range(len(ips)):
-            ips[i] = ips[i].increaseHost(1)
-        
+            ispPlusOneHost.append(ips[i].increaseHost(1))
+        return ispPlusOneHost
     
    

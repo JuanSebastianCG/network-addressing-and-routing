@@ -35,6 +35,7 @@ class Port:
         
     def getJustNumber(self):
         number =  self.name.split("/")
+        number = int(number[1]) 
         return number
         
     def actualDevice(self):
@@ -53,9 +54,9 @@ class Port:
     
     def ipConected(self):
         if self.portHubication == "start":
-            return self.conection.ip1
+            return self.conection.ip2
         elif self.portHubication == "end":
-             return self.conection.ip2
+             return self.conection.ip1
         return None
     
     def ipActual(self):

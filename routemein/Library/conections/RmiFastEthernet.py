@@ -44,56 +44,26 @@ class FastEthernet(Conection):
                 ip1 = None
                 
         elif (type(device1) == SwitchDevice and type(device2) == SwitchDevice):
+            
             ip1 = configuration.getNextIpforVlan()
             ip2 = configuration.getNextIpforVlan()
-        
+                  
         
         """ ports """
         if portFastethernet1 != None: port1 = self.searchPort(device1,"start",portFastethernet1)
-        elif (type(configuration) == Vlan): port1 = self.searchPortRange( device1,"start",configuration.fastethernetRangeIn,configuration.fastethernetRangeFin)
+        elif (type(configuration) == Vlan and type(device1) == SwitchDevice): port1 = self.searchPortRange( device1,"start",configuration.fastethernetRangeIn,configuration.fastethernetRangeFin)
         else: port1 = FastEthernet.selectPorts(self,device1,"start")
         
         if portFastethernet2 != None: port2 = self.searchPort(device2,"end",portFastethernet2)
-        elif (type(configuration) == Vlan): port2 = self.searchPortRange( device2,"end",configuration.fastethernetRangeIn,configuration.fastethernetRangeFin)
+        elif (type(configuration) == Vlan and type(device2) == SwitchDevice): port2 = self.searchPortRange( device2,"end",configuration.fastethernetRangeIn,configuration.fastethernetRangeFin)
         else: port2 = FastEthernet.selectPorts(self,device2,"end")
         
         super().__init__(device1, device2, area ,port1 ,port2 ,ip1,ip2)
     
         
         
-    def __str__(self) -> string:
-        text = "" 
-        if (type(self.device1) == HostDevice and type(self.device2) == RouterDevice):
-            text += "ipHosts: " + str(self.ip1) + "\n"
-            text += "ipRouter: " + str(self.ip2) + "\n"       
-        elif (type(self.device1) == RouterDevice and type(self.device2) == HostDevice):
-            text += "ipHosts: " + str(self.ip2) + "\n"
-            text += "ipRouter: " + str(self.ip1) + "\n"  
-        text += super().__str__()
-        return text
 
-    def searchPort(self,device,portHubication, portName):
-        for port in device.fastEthernetPorts:
-            if port.isFree and port.name == portName:
-                port.addDevice(self,portHubication)
-                return port
-        raise Exception("Error: The device has no free fastEthernet ports or the port name is not correct")
-    
 
-    def searchPortRange(self,device,portHubication, min, max):
-        for port in device.fastEthernetPorts:
-            print(port.getJustNumber())
-            if port.isFree:
-                port.addDevice(self,portHubication)
-                return port
-        raise Exception("Error: The device has no free fastEthernet ports or the port name is not correct")
-        
-    
-    def selectPorts(self,device,portHubication): 
-        for port in device.fastEthernetPorts:
-            if port.isFree:
-                port.addDevice(self,portHubication)
-                return port
-        raise Exception("Error: The device has no free fastEthernet ports")
+
     
     
