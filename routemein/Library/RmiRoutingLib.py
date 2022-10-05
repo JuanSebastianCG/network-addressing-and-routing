@@ -198,6 +198,14 @@ class routingHandler:
             
         return text
             
+            
+    @staticmethod
+    def showHosts(hosts):
+        text = ""
+        for host in hosts:
+            text +=  host.name +" " + str(host.assignedIp.getOnlyIp()) + " - " + str(host.assignedIp.getMaskIp()) + " --------> " +str(host.fastEthernetPorts[0].portConected().name)+"\n"
+        return text
+            
           
     
     

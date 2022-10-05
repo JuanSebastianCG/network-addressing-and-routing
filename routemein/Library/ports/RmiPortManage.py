@@ -72,6 +72,13 @@ class Port:
              return self.conection.port2
         return None
     
+    def portConected(self):
+        if self.portHubication == "start":
+            return self.conection.port2
+        elif self.portHubication == "end":
+             return self
+        return None
+    
         
         
         

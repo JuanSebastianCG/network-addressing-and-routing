@@ -11,7 +11,7 @@ class SwitchDevice(Device):
 
     def __init__(self, name: string, vlans,assignedIp: ip = None, fastEthernetPorts= None):
         self.vlans = vlans
-        self.assignedIp: ip = None
+        self.assignedIp: ip = assignedIp
         
         if fastEthernetPorts == None:
             fastEthernetPorts = []
@@ -24,6 +24,7 @@ class SwitchDevice(Device):
     def __str__(self) -> string:
         text = ""
         text += super().__str__()
+        text += "ip: " + str(self.assignedIp) + "\n"
         for vlan in self.vlans:
             text +=str(vlan.name) +" "+str(vlan.number) +" range: " +  str(vlan.fastethernetRangeIn) + "-" + str(vlan.fastethernetRangeFin) + "\n"
         return text

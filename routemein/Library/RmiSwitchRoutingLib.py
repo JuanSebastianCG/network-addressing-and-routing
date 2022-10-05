@@ -1,3 +1,4 @@
+from cgitb import text
 import imp
 import string
 
@@ -13,14 +14,14 @@ class SwitchRouting:
         for switch in switchs:
             gigaethernet = switch.getVlanGigaethernet()
             text += "-------------"+switch.name+"------------------------- \n"
+            text += "enable\n"
             text += "configure terminal\n"
             text += "interface range fastethernet0/1-24\n"
             text += "Shutdown \n"
             text += "interface range gigaethernet 0/1\n"
             text += "no shutdown\n"
             
-            text += "enable\n"
-            text += "configure terminal\n"
+
             text += "interface range fastethernet0/1-24\n"
             text += "switchport mode access\n"
             text += "no shutdown\n"
@@ -42,16 +43,15 @@ class SwitchRouting:
                     text += "exit\n"
             
             """ buscar si un este swich esta conectado a otro switch """
-            for port in switch.portsConected():
-                if type(port.actualDevice()) == SwitchDevice  and type(port.conectedDevice()) == SwitchDevice: 
-                    text += "\ninterface vlan "+str(gigaethernet.number)+"\n"
-                    text += "ip address "+str(port.ipActual())+" "+str(port.ipActual().getMaskIp())+"\n"
-                    text += "no shutdown\n"
-                    break
+          
+            text += "\ninterface vlan "+str(gigaethernet.number)+"\n"
+            text += "ip address "+str(switch.assignedIp.getOnlyIp())+" "+str(switch.assignedIp.getMaskIp())+"\n"
+            text += "no shutdown\n"
+            
 
             
-            text += "\nconfigure terminal\n"
-            text += "interface range fastethernet0/"+str(gigaethernet.fastethernetRangeIn)+"-"+str(gigaethernet.fastethernetRangeFin)+"\n"
+     
+            text += "\ninterface range fastethernet0/"+str(gigaethernet.fastethernetRangeIn)+"-"+str(gigaethernet.fastethernetRangeFin)+"\n"
             text += "switchport mode trunk\n"
             text += "switchport trunk native vlan "+str(gigaethernet.number)+"\n"
             text += "no shutdown\n"
@@ -60,6 +60,7 @@ class SwitchRouting:
         return text
             
             
+ 
         
             
             

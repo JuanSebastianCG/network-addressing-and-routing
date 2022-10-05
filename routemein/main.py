@@ -1,4 +1,5 @@
 
+from unicodedata import name
 from Library.settingDevice.RmiVlan import Vlan
 
 """ addresing and routing """
@@ -101,9 +102,9 @@ vlans = [
 
 """ rd(name of the device, serial port ejem: [port("0/0"),port("0/2")], fasethernet port ejem:  [port("0/0"),port("0/2")]  ) """
 switch = [
-          sd("switch0",vlans),
-          sd("switch1",vlans),
-          sd("switch2",vlans),
+          sd("switch0",vlans,vlans[3].getNextIpforVlan()),
+          sd("switch1",vlans,vlans[3].getNextIpforVlan()),
+          sd("switch2",vlans,vlans[3].getNextIpforVlan()),
           ]
 
 hostsGroup1 = [
@@ -148,13 +149,20 @@ switchConection = [
           fc(switch[1], switch[2], 0, vlans[3]),    
 ]
 
-""" print(str(switch[0])) """
-print(swr.vlanConfiguration(switch))
+
+
+
+
+print(rth.showHosts(hostsGroup1))
+print(rth.showHosts(hostsGroup2))
+print(rth.showHosts(hostsGroup3))
+
+""" print(swr.vlanConfiguration(switch)) """
 """ print(str(switchConection[0]))
 print(str(switchConection[1])) """
 """ print(rth.addresingStatic(routers,hosts)) """
 
-
+""" print(rth.showConections([ hostsGroup3])) """
 
 
 
