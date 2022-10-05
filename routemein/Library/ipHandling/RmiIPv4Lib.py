@@ -129,11 +129,12 @@ class IPv4:
         return availableIp
     
     def getClassIp(self) -> string: 
-        if self.mask <= 255  and self.mask >= 0:
+        hosts = self.getHosts()
+        if  hosts <= 255  and hosts >= 0:
             return 'C'
-        elif self.mask <= 65535 and self.mask >= 256:
+        elif hosts <= 65535 and hosts >= 256:
             return 'B'
-        elif self.mask <= 16777215 and self.mask >= 65536:
+        elif hosts <= 16777215 and hosts >= 65536:
             return 'A'
         
             

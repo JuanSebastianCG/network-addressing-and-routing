@@ -4,6 +4,7 @@ from Library.settingDevice.RmiVlan import Vlan
 """ addresing and routing """
 from Library.RmiAddressingLib import addressingHandler as adr
 from Library.RmiRoutingLib import routingHandler as rth
+from Library.RmiSwitchRoutingLib import SwitchRouting as swr
 
 """ ip management """
 from Library.ipHandling.RmiBinaryNumbersLib import binaryNumbersHandler as bnh
@@ -75,7 +76,7 @@ fastEthernetConection = [
 """ print(rth.basicConfiguration(routers))  """
 """ print(rth.addressingRipV4(routers))  """
 """ print(rth.addressingOSPF(routers))  """
-print(rth.addressingRipv2OSPF(routers))
+""" print(rth.addressingRipv2OSPF(routers)) """
 """ print(rth.addresingStatic(routers,hosts)) """
 
 
@@ -147,7 +148,8 @@ switchConection = [
           fc(switch[1], switch[2], 0, vlans[3]),    
 ]
 
-
+""" print(str(switch[0])) """
+print(swr.vlanConfiguration(switch))
 """ print(str(switchConection[0]))
 print(str(switchConection[1])) """
 """ print(rth.addresingStatic(routers,hosts)) """

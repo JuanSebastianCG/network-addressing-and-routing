@@ -16,7 +16,6 @@ class Vlan():
         
     def __str__(self) -> string:
         text = ""
-        text += "---------------------------\n" 
         text += "Vlan Name: " + self.name + "\n"
         text += "Vlan Number: " + str(self.number) + "\n"
         text += "FastEthernet Range: " + str(self.fastethernetRangeIn) + " - " + str(self.fastethernetRangeFin) + "\n"
