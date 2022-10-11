@@ -7,7 +7,7 @@ from Library.devices.RmiHostDevice import HostDevice
 from Library.devices.RmiRouterDevice import RouterDevice
 from Library.devices.RmiSwitchDevice import SwitchDevice
 
-from Library.ports.RmiPortManage import Port
+from Library.settingDevice.RmiPortManage import Port
 from Library.conections.RmiConection import Conection
 from Library.settingDevice.RmiVlan import Vlan
 

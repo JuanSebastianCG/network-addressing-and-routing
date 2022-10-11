@@ -4,7 +4,7 @@ import string
 
 from Library.devices.RmiDevice import Device
 from Library.ipHandling.RmiIPv4Lib import IPv4 as ip
-from Library.ports.RmiPortManage import Port as port
+from Library.settingDevice.RmiPortManage  import Port as port
 
 
 class SwitchDevice(Device):

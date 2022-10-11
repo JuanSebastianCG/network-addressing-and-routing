@@ -33,7 +33,8 @@ class IPv4:
     """Returns the full IP in binary as a string"""
     def get_binary_string(self) -> str:
         return bnh.int_to_bin(self.ipV4[0])+bnh.int_to_bin(self.ipV4[1])+bnh.int_to_bin(self.ipV4[2])+bnh.int_to_bin(self.ipV4[3])
-
+   
+    
     """Creates an IP object from a string of an IP in binary. """
     @staticmethod
     def create_new_ip_from_string(binary_str: str, mask: int) -> 'IPv4':
@@ -156,7 +157,7 @@ class IPv4:
                 ip += '.'  
         return ip
     
-              
+    
     def getMaskIp(self) -> string:
         ip = ''
         limit =  self.mask//8 

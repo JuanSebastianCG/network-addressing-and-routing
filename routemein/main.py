@@ -1,6 +1,5 @@
 
 from unicodedata import name
-from Library.settingDevice.RmiVlan import Vlan
 
 """ addresing and routing """
 from Library.RmiAddressingLib import addressingHandler as adr
@@ -11,8 +10,10 @@ from Library.RmiSwitchRoutingLib import SwitchRouting as swr
 from Library.ipHandling.RmiBinaryNumbersLib import binaryNumbersHandler as bnh
 from Library.ipHandling.RmiIPv4Lib import IPv4 as ip
 
-""" port """
-from Library.ports.RmiPortManage import Port as port
+""" settings """
+from Library.settingDevice.RmiPortManage  import Port as port
+from Library.settingDevice.RmiDHCP  import DhcpEasyIP as dhcpEasyIp 
+from Library.settingDevice.RmiVlan import Vlan
 
 """ devices """
 from Library.devices.RmiHostDevice import HostDevice as hd
@@ -46,11 +47,17 @@ wan = rth.wanGenerator(2,ip(220,11,10,0,29))
 """ print(adr.showAddressing(ipAd,hosts)) """
 """ for i in wan: print(i) """
 
+easyIp = [
+    dhcpEasyIp(ip(192,168,10,0,24),9,ip(192,168,20,254,30)),
+    dhcpEasyIp(ip(192,168,30,0,24),9,ip(255,255,255,0,30)),
+]
+
+
 """ rd(name of the device, serial port ejem: [port("0/0"),port("0/2")], fasethernet port ejem:  [port("0/0"),port("0/2")]  ) """
 routers = [
-           rd("router1"),
-           rd("router2"),
-           rd("router3"),
+           rd("router1",[easyIp[0]]),
+           rd("router2",),
+           rd("router3",[easyIp[1]]),
            rd("router4"),
         ]
 
@@ -89,88 +96,3 @@ print(rth.basicConfiguration(routers))
 
 
 """ -------------------------------------------- """
-""" 
-vlanIpHost = [30,550,2950,6] 
-vlanIpHost =  sorted(vlanIpHost, reverse=True)
-
-addressing(hosts, ip (opcional))
-vlanIp= adr.addressing(vlanIpHost)
-
-print(adr.showAddressing(vlanIp,vlanIpHost))
-
-vlans = [
-    Vlan( vlanIp[0],"vlan1",10,10,12),
-    Vlan( vlanIp[1],"vlan2",20,13,17),
-    Vlan( vlanIp[2],"vlan3",30,18,20),     
-    Vlan( vlanIp[3],"vlanAd",99,1,4, True),     
-         ] 
-
-
-rd(name of the device, serial port ejem: [port("0/0"),port("0/2")], fasethernet port ejem:  [port("0/0"),port("0/2")]  )
-switch = [
-          sd("switch0",vlans,vlans[3].getNextIpforVlan()),
-          sd("switch1",vlans,vlans[3].getNextIpforVlan()),
-          sd("switch2",vlans,vlans[3].getNextIpforVlan()),
-          ]
-
-hostsGroup1 = [
-         hd("host0") ,
-         hd("host1") ,
-         hd("host2") ,
-           ]
-hostsGroup2 = [
-         hd("host3") ,
-         hd("host4") ,
-         hd("host5") ,
-           ]
-hostsGroup3 = [
-         hd("host6") ,
-         hd("host7") ,
-         hd("host8") ,
-           ]
-
-conectionGroup1 = [
-          fc(hostsGroup1[0], switch[0], 0, vlans[0]),
-          fc(hostsGroup1[1], switch[0], 0, vlans[1]),
-          fc(hostsGroup1[2], switch[0], 0, vlans[2]),
-  
-]
-
-conectionGroup2 = [
-          fc(hostsGroup2[0], switch[1], 0, vlans[0]),
-          fc(hostsGroup2[1], switch[1], 0, vlans[1]),
-          fc(hostsGroup2[2], switch[1], 0, vlans[2]),
-  
-]
-
-conectionGroup3 = [
-          fc(hostsGroup3[0], switch[2], 0, vlans[0]),
-          fc(hostsGroup3[1], switch[2], 0, vlans[1]),
-          fc(hostsGroup3[2], switch[2], 0, vlans[2]),
-  
-]
-
-switchConection = [
-          fc(switch[0], switch[1], 0, vlans[3]),
-          fc(switch[1], switch[2], 0, vlans[3]),    
-]
- """
-
-
-
-""" 
-print(rth.showHosts(hostsGroup1))
-print(rth.showHosts(hostsGroup2))
-print(rth.showHosts(hostsGroup3)) """
-
-""" print(swr.vlanConfiguration(switch)) """
-""" print(str(switchConection[0]))
-print(str(switchConection[1])) """
-""" print(rth.addresingStatic(routers,hosts)) """
-
-""" print(rth.showConections([ hostsGroup3])) """
-
-
-
- 
- 

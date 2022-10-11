@@ -3,12 +3,17 @@ import string
 
 
 from Library.devices.RmiDevice import Device
-from Library.ports.RmiPortManage import Port as port
+from Library.settingDevice.RmiPortManage  import Port as port
 
 
 class RouterDevice(Device):
 
-    def __init__(self, name: string,  serialPorts= None, fastEthernetPorts= None):
+    def __init__(self, name: string, settings = None ,serialPorts= None, fastEthernetPorts= None):
+        
+        if settings == None: self.settings = []
+        else: self.settings = settings
+        
+        
         """ add serial ports if the user does not provide them """
         if serialPorts == None: self.serialPorts = [port("0/0"), port("0/1"),port("0/2")]
         else: self.serialPorts = serialPorts
@@ -19,6 +24,8 @@ class RouterDevice(Device):
     def __str__(self) -> string:
         text = super().__str__()
         text += "  -Serials: \n" + self.showPorts(self.serialPorts) + "\n"
+        for conf in self.settings:
+            text += str(conf) + "\n"
         return text
 
 

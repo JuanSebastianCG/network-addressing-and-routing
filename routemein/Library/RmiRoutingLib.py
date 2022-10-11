@@ -9,6 +9,9 @@ from telnetlib import IP
 from Library.RmiAddressingLib import addressingHandler as addressing
 from Library.ipHandling.RmiIPv4Lib import IPv4 as ip
 
+from Library.devices.RmiRouterDevice import RouterDevice as router
+from Library.settingDevice.RmiDHCP import DhcpEasyIP as dhcpE
+
 
 
 class routingHandler:
@@ -43,9 +46,17 @@ class routingHandler:
                 text += "no shutdown\n"
                 text += "exit\n"
             
-            text += "\n"   
             
-  
+            for setting in router.settings:
+                if type(setting) ==  dhcpE:
+                    text += "ip dhcp excluded-address "+str(setting.initialExclusion.getOnlyIp())+" "+str(setting.finalExclusion.getOnlyIp())+"\n"
+                    text += "ip dhcp pool R1LAN\n"
+                    text += "network "+str(setting.initialIp.getOnlyIp())+" "+str(setting.mask) +"\n"
+                    text += "default-router "+str(setting.gateWay.getOnlyIp())+"\n"
+                    text += "dns-server "+str(setting.dns_Server.getOnlyIp())+"\n"
+            
+
+            text += "\n"   
         return text
         
     
