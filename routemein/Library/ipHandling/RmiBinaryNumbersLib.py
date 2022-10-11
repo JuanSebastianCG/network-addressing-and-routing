@@ -13,7 +13,7 @@ class binaryNumbersHandler:
     def sum(num1: str, num2: str) -> str:
         return binaryNumbersHandler.int_to_bin_Ip(int(num1,2)+int(num2,2))
     
-    
+    """ convert a number to an octet of binary """
     @staticmethod
     def int_to_bin(num: int) -> string:
         res = bin(num)[2:]
@@ -21,6 +21,8 @@ class binaryNumbersHandler:
             res=binaryNumbersHandler.zeros[0:8-len(res)]+res
         return res
     
+    """ convert a full number to an ip """
+    @staticmethod
     def int_to_bin_Ip(num: int) -> string:
         res = bin(num)[2:]
         if len(res) < 32:

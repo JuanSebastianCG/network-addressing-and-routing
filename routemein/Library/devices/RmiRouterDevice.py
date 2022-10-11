@@ -13,7 +13,6 @@ class RouterDevice(Device):
         if settings == None: self.settings = []
         else: self.settings = settings
         
-        
         """ add serial ports if the user does not provide them """
         if serialPorts == None: self.serialPorts = [port("0/0"), port("0/1"),port("0/2")]
         else: self.serialPorts = serialPorts

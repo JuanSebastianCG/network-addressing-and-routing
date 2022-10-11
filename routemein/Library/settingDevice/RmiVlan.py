@@ -23,7 +23,7 @@ class Vlan():
         text += "Next Host Ip: " + str(self.nextHostsIp) + "\n"
         return  text
     
-    
+    """ returns the following useful number for a host """
     def getNextIpforVlan(self):
         self.nextHostsIp = self.nextHostsIp.increaseHost(1)
         return self.nextHostsIp

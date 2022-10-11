@@ -27,17 +27,21 @@ class Port:
    
         return  text
         
+    """ connects the port via a connection to another device """
     def addDevice(self,conection,portHubication):
         self.isFree = False
         self.conection = conection
         self.portHubication = portHubication
         
-        
+    """ returns the integer number of the port """  
     def getJustNumber(self):
         number =  self.name.split("/")
         number = int(number[1]) 
         return number
         
+    """ these methods identify which side the port is on and return valuable information """
+    
+    
     def actualDevice(self):
         if self.portHubication == "start":
             return self.conection.device1

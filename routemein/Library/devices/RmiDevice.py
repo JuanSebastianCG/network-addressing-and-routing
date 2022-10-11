@@ -49,6 +49,7 @@ class Device:
       
         return portConected
 
+    """ return all ports including those of subclasses """
     def allPorts(self, addPort = []):
         auxArray = addPort
         addPort = [] 

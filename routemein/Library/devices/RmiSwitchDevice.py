@@ -30,7 +30,7 @@ class SwitchDevice(Device):
         return text
     
 
-
+    """ of all the valn configured in the vlan returns the one assigned as gigaethernet """
     def getVlanGigaethernet(self):
         for vlan in self.vlans:
             if vlan.gigaethernet:
