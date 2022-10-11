@@ -68,4 +68,32 @@ class addressingHandler:
             ispPlusOneHost.append(ips[i].increaseHost(1))
         return ispPlusOneHost
     
+    
+    
+        """ generate necessary ips for aggregation to a wan connection
+    
+         Parameters
+        ----------
+        amountOf : int // amount of wan connections
+        inicIp : ip // ip to start the wan connections ( opcional )
+        minHost : int // minimum amount of hosts to be able to connect to the wan ( opcional )
+        ------
+    """
+    @staticmethod
+    def wanGenerator(amountOf: int,inicIp: ip = None, minHost = None):
+        
+        wanIps = []
+        if minHost == None and inicIp == None: 
+            inicIp = ip.generateIp(addressingHandler.findMask(amountOf))
+        elif inicIp == None and minHost != None:
+            inicIp = ip.generateIp(addressingHandler.findMask(minHost))
+        
+        for i in range(amountOf):
+            wanIps.append(inicIp.increaseSubclass(i))
+            
+        return wanIps
+    
+    
+    
+    
    
