@@ -33,48 +33,54 @@ hosts = [30,550,2950]
 hosts =  sorted(hosts, reverse=True)
 
 """ addressing(hosts, ip (opcional)) """
-ipAd = adr.addressing(hosts,ip(198,168,0,0,29))
+ipAd = adr.addressing(hosts,ip(192,168,10,0,0))
+ipAd = adr.addressing(hosts)
+ipAd = [ip(192,168,10,0,24), ip(192,168,30,0,24), ip(192,168,20,0,24)]
+
 """ add one host to each ip """
 ipAd = adr.addAHostToIps(ipAd)
 
 """  wanGenerator(wan numbers of wan directions, base ip (optional), 4(number of hosts per wan))"""
 wan = rth.wanGenerator(2,ip(220,11,10,0,29))
 
-
 """ print(adr.showAddressing(ipAd,hosts)) """
 """ for i in wan: print(i) """
 
 """ rd(name of the device, serial port ejem: [port("0/0"),port("0/2")], fasethernet port ejem:  [port("0/0"),port("0/2")]  ) """
 routers = [
-           rd("router0"),
            rd("router1"),
            rd("router2"),
+           rd("router3"),
+           rd("router4"),
         ]
 
 """ hd (name, assigned ip(red), fasethernet port :  [port("0/0"),port("0/2")] (opcional))"""
-hosts = [hd("host0", ipAd[0]) ,
-         hd("host1 ", ipAd[1]) ,
-         hd("host2 ", ipAd[2]) ,
+hosts = [hd("pc0", ipAd[0]) ,
+         hd("pc1 ", ipAd[2]) ,
+         hd("server0 ", ipAd[1]) ,
+         hd("server1", ipAd[1]) ,
+         hd("server2", ipAd[1]) ,
            ]
 
 """ wc( dispositivo 1, dispositivo 2 ,zona,assigned ip(red), portDispositivo1(opcional), portDispositivo2(opcional)) """""" connection order matters!! """
 wanConection = [
-                wc(routers[0], routers[1], wan[0],0),
-                wc(routers[1], routers[2], wan[1],0),   
+                wc(routers[0], routers[1], ip(10,1,1,0,30),0),
+                wc(routers[1], routers[2], ip(10,2,2,0,30),0),   
+                wc(routers[1], routers[3], ip(209,165,200,224,27),0),   
                 ]
 
 
 """ fc( dispositivo1, dispositivo 2, portDispositivo1(opcional), portDispositivo2(opcionale)) """""" connection order matters!! """
 fastEthernetConection = [
                 fc(hosts[0], routers[0],0),
-                fc(hosts[1], routers[1],0),     
-                fc(hosts[2], routers[2],0),     
+                fc(hosts[1], routers[2],0),     
+                fc(hosts[2], routers[1],0),     
                 ]
 
 
 
-""" print(rth.showConections([routers, hosts])) """ ; """  show all conection of the devices """
-""" print(rth.basicConfiguration(routers))  """
+""" print(rth.showConections([routers]))  """; """  show all conection of the devices """
+print(rth.basicConfiguration(routers)) 
 """ print(rth.addressingRipV4(routers))  """
 """ print(rth.addressingOSPF(routers))  """
 """ print(rth.addressingRipv2OSPF(routers)) """
@@ -83,14 +89,14 @@ fastEthernetConection = [
 
 
 """ -------------------------------------------- """
-
+""" 
 vlanIpHost = [30,550,2950,6] 
 vlanIpHost =  sorted(vlanIpHost, reverse=True)
 
-""" addressing(hosts, ip (opcional)) """
-vlanIp= adr.addressing(vlanIpHost,ip(198,168,0,0,29))
+addressing(hosts, ip (opcional))
+vlanIp= adr.addressing(vlanIpHost)
 
-""" print(adr.showAddressing(vlanIp,vlanIpHost)) """
+print(adr.showAddressing(vlanIp,vlanIpHost))
 
 vlans = [
     Vlan( vlanIp[0],"vlan1",10,10,12),
@@ -100,7 +106,7 @@ vlans = [
          ] 
 
 
-""" rd(name of the device, serial port ejem: [port("0/0"),port("0/2")], fasethernet port ejem:  [port("0/0"),port("0/2")]  ) """
+rd(name of the device, serial port ejem: [port("0/0"),port("0/2")], fasethernet port ejem:  [port("0/0"),port("0/2")]  )
 switch = [
           sd("switch0",vlans,vlans[3].getNextIpforVlan()),
           sd("switch1",vlans,vlans[3].getNextIpforVlan()),
@@ -148,14 +154,14 @@ switchConection = [
           fc(switch[0], switch[1], 0, vlans[3]),
           fc(switch[1], switch[2], 0, vlans[3]),    
 ]
+ """
 
 
 
-
-
+""" 
 print(rth.showHosts(hostsGroup1))
 print(rth.showHosts(hostsGroup2))
-print(rth.showHosts(hostsGroup3))
+print(rth.showHosts(hostsGroup3)) """
 
 """ print(swr.vlanConfiguration(switch)) """
 """ print(str(switchConection[0]))

@@ -11,7 +11,7 @@ class binaryNumbersHandler:
     """Adds two numbers in binary."""
     @staticmethod
     def sum(num1: str, num2: str) -> str:
-        return binaryNumbersHandler.int_to_bin(int(num1,2)+int(num2,2))
+        return binaryNumbersHandler.int_to_bin_Ip(int(num1,2)+int(num2,2))
     
     
     @staticmethod
@@ -19,6 +19,12 @@ class binaryNumbersHandler:
         res = bin(num)[2:]
         if len(res) < 8:
             res=binaryNumbersHandler.zeros[0:8-len(res)]+res
+        return res
+    
+    def int_to_bin_Ip(num: int) -> string:
+        res = bin(num)[2:]
+        if len(res) < 32:
+            res=binaryNumbersHandler.zerosIp[0:32-len(res)]+res
         return res
     
     @staticmethod

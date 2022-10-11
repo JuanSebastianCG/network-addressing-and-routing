@@ -45,17 +45,17 @@ class IPv4:
         firstOct = []
         secondOct = []
         """C"""
-        if mask <= 255  and mask >= 0:  
+        if mask <=32  and mask >= 24:  
             firstOct = [192, 255]
             secondOct = [168, 168]
 
             """ class B """
-        elif mask <= 65535 and mask >= 256: 
+        elif mask < 24  and mask >= 17:  
             firstOct = [10, 171]
             secondOct = [16, 255]
         
             """ class A """
-        elif mask <= 16777215 and mask >= 65536: 
+        elif mask <=16  and mask >= 8:  
             firstOct = [10, 171]
             secondOct = [16, 31]
         
@@ -93,10 +93,13 @@ class IPv4:
     
     """
     def increaseHost(self, increase: int):
+
         auxIp = IPv4(self.ipV4[0], self.ipV4[1], self.ipV4[2], self.ipV4[3], self.mask)
-        for i in range(increase): 
+
+        for i in range(increase):
             auxIp = bnh.sum(auxIp.get_binary_string(),"1" )
             auxIp = self.create_new_ip_from_string(auxIp, self.mask)
+  
         return auxIp
 
 

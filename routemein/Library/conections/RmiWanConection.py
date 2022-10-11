@@ -23,6 +23,7 @@ class WanConection(Conection):
         if portSerial2 != None:port2 = self.searchPort(device2,"end",portSerial2)
         else: port2 = WanConection.selectPorts(self,device2,"end")
 
+  
         """ taking into account the parent ip assigns an ipa to each connection without taking the broadcast or network """
         super().__init__(device1, device2, area,
                          port1,
