@@ -50,15 +50,15 @@ wan = Addressing.wanGenerator(2,ip(220,11,10,0,29))
 easyIp = [
     dhcpEasyIp("r1",ip(130,10,2,0,25),
                [[ip(130,10,2,1,25),5]],
-               ip(192,168,20,254,30)),
+               ip(130,10,2,222,30)),
     
     dhcpEasyIp("r2",ip(130,10,2,128,26 ),
                [[ip(130,10,2,128,26),6]] ,
-               ip(192,168,20,254,30)),
+               ip(130,10,2,222,30)),
     
-    dhcpEasyIp("r2", ip(130,10,0,0,23 ),
+    dhcpEasyIp("r3", ip(130,10,0,0,23 ),
                [[ip(130,10,0,0,23),6]] ,
-               ip(192,168,20,254,30)),
+               ip(130,10,2,222,30)),
 
 ]
 
@@ -76,7 +76,7 @@ hosts = [HostD("pc0",  ip(130,10,2,7,25),easyIp[0].gateWay) ,
          HostD("pc1 ",  ip(130,10,2,135,26),easyIp[1].gateWay) ,
          HostD("pc3", ip(130,10,0,7,23),easyIp[2].gateWay) ,
          HostD("server0",ip(130,10,2,222,27),ip(130,10,2,193,27)) ,
-         HostD("server1", ip(210,22,66,1,24)) ,
+         HostD("server1", ip(210,22,66,85,24),ip(210,22,66,1,24)) ,
            ]
 
 """ wc( dispositivo 1, dispositivo 2 ,assigned ip(red), Area , portDispositivo1(opcional), portDispositivo2(opcional)) """""" connection oRouterDer matters!! """
@@ -102,7 +102,7 @@ fastEthernetConection = [
 print(Routing.showHosts(hosts))
 print(Routing.basicConfiguration(routers)) 
 """ print(Routing.addressingRipV4(routers))  """
-print(Routing.addressingOSPF(routers)) 
+""" print(Routing.addressingOSPF(routers))  """
 """ print(Routing.addressingRipv2OSPF(routers)) """
 """ print(Routing.addresingStatic(routers,hosts)) """
 

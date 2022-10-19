@@ -200,7 +200,7 @@ class routingHandler:
     def showHosts(hosts):
         text = ""
         for host in hosts:
-            text +=  host.name +" " + str(host.assignedIp.getOnlyIp()) + " - " + str(host.assignedIp.getMaskIp()) + " --------> " +str(host.fastEthernetPorts[0].portConected().name)+"\n"
+            text +=  host.name +"ip:  " + str(host.assignedIp.getOnlyIp()) + " - " + str(host.assignedIp.getMaskIp()) +"  | gateWay "+  str(host.gateWay.getOnlyIp())   +" --------> " +str(host.fastEthernetPorts[0].portConected().name)+"\n"
         return text
             
           
