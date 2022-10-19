@@ -70,7 +70,7 @@ class addressingHandler:
     
     
     
-        """ generate necessary ips for aggregation to a wan connection
+    """ generate necessary ips for aggregation to a wan connection
     
          Parameters
         ----------
@@ -80,7 +80,7 @@ class addressingHandler:
         ------
     """
     @staticmethod
-    def wanGenerator(amountOf: int,inicIp: ip = None, minHost = None):
+    def wanGenerator(amountOf: int,inicIp: ip = None, minHost = None) -> list:
         
         wanIps = []
         if minHost == None and inicIp == None: 

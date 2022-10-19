@@ -25,8 +25,8 @@ class FastEthernet(Conection):
         """ ip """
         if (type(device1) == HostDevice ):
             if ((type(device2) == RouterDevice or type(device2) == SwitchDevice) and configuration == None):
-                ip1 = device1.assignedIp
-                ip2 = ip1.increaseHost(1)
+                ip2 = None
+                ip1 = device1.gateWay
             elif (type(device2) == SwitchDevice and configuration != None):
                 ip1 = configuration.getNextIpforVlan()
                 device1.assignedIp = ip1
@@ -34,8 +34,8 @@ class FastEthernet(Conection):
   
         elif (type(device2) == HostDevice ):
             if ((type(device1) == RouterDevice or type(device1) == SwitchDevice) and configuration == None):
-                ip2 = ip2.increaseHost(1)
-                ip1 = device2.assignedIp
+                ip1 = None
+                ip2 = device1.gateWay
             elif (type(device1) == SwitchDevice and configuration != None):
                 ip2 = configuration.getNextIpforVlan()
                 device2.assignedIp = ip2

@@ -1,6 +1,7 @@
 
 from unicodedata import name
 
+
 """ addresing and routing """
 from Library.RmiAddressingLib import addressingHandler as Addressing
 from Library.RmiRoutingLib import routingHandler as Routing
@@ -35,7 +36,6 @@ hosts =  sorted(hosts, reverse=True)
 """ addressing(hosts, ip (opcional)) """
 ipAd = Addressing.addressing(hosts,ip(192,168,10,0,0))
 ipAd = Addressing.addressing(hosts)
-ipAd = [ip(192,168,10,0,24), ip(192,168,30,0,24), ip(192,168,20,0,24)]
 
 """ add one host to each ip """
 ipAd = Addressing.addAHostToIps(ipAd)
@@ -48,60 +48,62 @@ wan = Addressing.wanGenerator(2,ip(220,11,10,0,29))
 
 
 easyIp = [
-    dhcpEasyIp(ip(192,168,10,0,24),9,ip(192,168,20,254,30)),
-    dhcpEasyIp(ip(192,168,30,0,24),9,ip(255,255,255,0,30)),
+    dhcpEasyIp("r1",ip(130,10,2,0,25),
+               [[ip(130,10,2,1,25),5]],
+               ip(192,168,20,254,30)),
+    
+    dhcpEasyIp("r2",ip(130,10,2,128,26 ),
+               [[ip(130,10,2,128,26),6]] ,
+               ip(192,168,20,254,30)),
+    
+    dhcpEasyIp("r2", ip(130,10,0,0,23 ),
+               [[ip(130,10,0,0,23),6]] ,
+               ip(192,168,20,254,30)),
+
 ]
 
 
-""" rd(name of the device, serial port ejem: [port("0/0"),port("0/2")], fasethernet port ejem:  [port("0/0"),port("0/2")]  ) """
+""" rd(name of the device, setting [dhcpEasyIp,setting2](opcional) ,serial port ejem: [port("0/0"),port("0/2")](opcional), fasethernet port ejem:  [port("0/0"),port("0/2")](opcional)  ) """
 routers = [
-           RouterD("router1",[easyIp[0]]),
-           RouterD("router2",),
-           RouterD("router3",[easyIp[1]]),
-           RouterD("router4"),
+           RouterD("router0",[easyIp[0],easyIp[1]]),
+           RouterD("router1",),
+           RouterD("router2",[easyIp[2]]),
+           RouterD("ISP"),
         ]
 
-
-switchs = [
-    SwitchD("switch0",None, ipAd[0]),
-    SwitchD("switch1",None, ipAd[2]),
-    
-]
-
-
-
-""" hd (name, assigned ip(red), fasethernet port :  [port("0/0"),port("0/2")] (opcional))"""
-hosts = [HostD("pc0", ipAd[0]) ,
-         HostD("pc1 ", ipAd[2]) ,
-         HostD("server0 ", ipAd[1]) ,
-         HostD("server1", ipAd[1]) ,
-         HostD("server2", ipAd[1]) ,
+""" hd (name, assigned ip, fasethernet port :  [port("0/0"),port("0/2")] (opcional))"""
+hosts = [HostD("pc0",  ip(130,10,2,7,25),easyIp[0].gateWay) ,
+         HostD("pc1 ",  ip(130,10,2,135,26),easyIp[1].gateWay) ,
+         HostD("pc3", ip(130,10,0,7,23),easyIp[2].gateWay) ,
+         HostD("server0",ip(130,10,2,222,27),ip(130,10,2,193,27)) ,
+         HostD("server1", ip(210,22,66,1,24)) ,
            ]
 
-""" wc( dispositivo 1, dispositivo 2 ,zona,assigned ip(red), portDispositivo1(opcional), portDispositivo2(opcional)) """""" connection oRouterDer matters!! """
+""" wc( dispositivo 1, dispositivo 2 ,assigned ip(red), Area , portDispositivo1(opcional), portDispositivo2(opcional)) """""" connection oRouterDer matters!! """
 wanConection = [
-                WanConection(routers[0], routers[1], ip(10,1,1,0,30),0),
-                WanConection(routers[1], routers[2], ip(10,2,2,0,30),0),   
-                WanConection(routers[1], routers[3], ip(209,165,200,224,27),0),   
+                WanConection(routers[0], routers[1], ip(15,15,15,0,30),0),
+                WanConection(routers[1], routers[2],  ip(15,15,15,4,30),0),   
+                WanConection(routers[1], routers[3] , ip(198,120,33,12,30),0),   
                 ]
 
 
-""" fc( dispositivo1, dispositivo 2, portDispositivo1(opcional), portDispositivo2(opcionale)) """""" connection order matters!! """
-fastEthernetConection = [
-                FastEthernetConection(hosts[0], switchs[0],0),
-                FastEthernetConection(switchs[0], routers[0],0),
+""" fc( dispositivo1, dispositivo 2, Area ,portDispositivo1(opcional), portDispositivo2(opcionale)) """""" connection order matters!! """
+fastEthernetConection = [                
+                FastEthernetConection(hosts[3], routers[1],0),
+                FastEthernetConection(hosts[4], routers[3],0),
+                
+                FastEthernetConection(hosts[0], routers[0],0),
+                FastEthernetConection(hosts[1], routers[0],0),
+                FastEthernetConection(hosts[2], routers[2],0),
                 
                 ]
 
-
-print(fastEthernetConection[1])
-print(Routing.showConections([routers, switchs])) ; """  show all conection of the devices """
+""" print(Routing.showConections([routers])) """ ; """  show all conection of the devices """
+print(Routing.showHosts(hosts))
 print(Routing.basicConfiguration(routers)) 
 """ print(Routing.addressingRipV4(routers))  """
-""" print(Routing.addressingOSPF(routers))  """
+print(Routing.addressingOSPF(routers)) 
 """ print(Routing.addressingRipv2OSPF(routers)) """
 """ print(Routing.addresingStatic(routers,hosts)) """
 
-
-
-""" -------------------------------------------- """
+""" -------------------show running-config ------------------------- """

@@ -10,6 +10,7 @@ from Library.RmiAddressingLib import addressingHandler as addressing
 from Library.ipHandling.RmiIPv4Lib import IPv4 as ip
 
 from Library.devices.RmiRouterDevice import RouterDevice as router
+from Library.devices.RmiHostDevice import HostDevice as host
 from Library.settingDevice.RmiDHCP import DhcpEasyIP as dhcpE
 
 
@@ -31,9 +32,11 @@ class routingHandler:
     
             portFastethernet = router.fastEthernetPortsConected()
             for port in portFastethernet:
+                deviceConected = port.conectedDevice()
    
                 text += "interface fastethernet "+str(port.name)+"\n"
-                text += "ip addres "+ str(port.ipConected().getOnlyIp())+" "+str(port.ipConected().getMaskIp())+"\n"
+                if(type(deviceConected) == host):
+                    text += "ip address "+str(deviceConected.gateWay.getOnlyIp())+" "+str(deviceConected.gateWay.getMaskIp())+"\n"
                 text += "no shutdown\n"
                 text += "exit\n"
 
@@ -49,8 +52,9 @@ class routingHandler:
             
             for setting in router.settings:
                 if type(setting) ==  dhcpE:
-                    text += "ip dhcp excluded-address "+str(setting.initialExclusion.getOnlyIp())+" "+str(setting.finalExclusion.getOnlyIp())+"\n"
-                    text += "ip dhcp pool R1LAN\n"
+                    for ip in setting.hostExclusives:
+                        text += "ip dhcp excluded-address "+str(ip[0].getOnlyIp())+" "+str(ip[1].getOnlyIp())+"\n"
+                    text += "ip dhcp pool "+str(setting.name)+"\n"
                     text += "network "+str(setting.initialIp.getOnlyIp())+" "+str(setting.mask) +"\n"
                     text += "default-router "+str(setting.gateWay.getOnlyIp())+"\n"
                     text += "dns-server "+str(setting.dns_Server.getOnlyIp())+"\n"
@@ -66,12 +70,14 @@ class routingHandler:
         text = ""
         for router in routers:
             text += "--------- router "+str(router.name)+" ------------\n"
+            text += "configure terminal\n"
             text += "router Rip\n"
             text += "version 2\n"
             devicesConected = router.portsConected()
             
             for device in devicesConected:
-                text += "network "+str(device.ipConected().getOnlyIp())+"\n"
+                ipConected = device.ipConected()
+                text += "network "+str(ipConected.getOnlyIp())+"\n"
             text += "exit\n\n"
             
   
