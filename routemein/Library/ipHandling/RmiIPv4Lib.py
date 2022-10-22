@@ -40,6 +40,19 @@ class IPv4:
     def create_new_ip_from_string(binary_str: str, mask: int) -> 'IPv4':
        return IPv4(int(binary_str[:8], 2), int(binary_str[8:16], 2), int(binary_str[16:24], 2), int(binary_str[24:32],  2),mask)
    
+    """compares the first ip with the second saying if it is greater than, less than or equal to it"""
+    @staticmethod
+    def compareIp(ip1: 'IPv4', ip2: 'IPv4') -> bool:
+        if ip1.ipV4[0] == ip2.ipV4[0] and ip1.ipV4[1] == ip2.ipV4[1] and ip1.ipV4[2] == ip2.ipV4[2] and ip1.ipV4[3] == ip2.ipV4[3]:
+            return "="
+        for i in range(4):
+            if ip1.ipV4[i] > ip2.ipV4[i]:
+                return ">"
+            elif ip1.ipV4[i] < ip2.ipV4[i]:
+                return "<"
+        
+        
+   
     """ generates an ip given a mask """
     @staticmethod
     def generateIp(mask: int):
@@ -120,7 +133,7 @@ class IPv4:
     def getOnlyIp(self):
         return str(self.ipV4[0])+'.'+str(self.ipV4[1])+'.'+str(self.ipV4[2])+'.'+str(self.ipV4[3])
         
-    
+    """ returns the number of ip networks that an ip can have """
     def getAvailableRed(self) -> string:
         classIp = self.getClassIp()
         availableIp : int 

@@ -37,6 +37,8 @@ class routingHandler:
                 text += "interface fastethernet "+str(port.name)+"\n"
                 if(type(deviceConected) == host):
                     text += "ip address "+str(deviceConected.gateWay.getOnlyIp())+" "+str(deviceConected.gateWay.getMaskIp())+"\n"
+                else:
+                     text += "ip address "+str(deviceConected.assignedIp.getOnlyIp())+" "+str(deviceConected.assignedIp.getMaskIp())+"\n"
                 text += "no shutdown\n"
                 text += "exit\n"
 
@@ -58,7 +60,7 @@ class routingHandler:
                     text += "network "+str(setting.initialIp.getOnlyIp())+" "+str(setting.mask) +"\n"
                     text += "default-router "+str(setting.gateWay.getOnlyIp())+"\n"
                     text += "dns-server "+str(setting.dns_Server.getOnlyIp())+"\n"
-            
+                    text += "exit\n"
 
             text += "\n"   
         return text
@@ -200,7 +202,7 @@ class routingHandler:
     def showHosts(hosts):
         text = ""
         for host in hosts:
-            text +=  host.name +"ip:  " + str(host.assignedIp.getOnlyIp()) + " - " + str(host.assignedIp.getMaskIp()) +"  | gateWay "+  str(host.gateWay.getOnlyIp())   +" --------> " +str(host.fastEthernetPorts[0].portConected().name)+"\n"
+            text +=  host.name +"  ip:  " + str(host.assignedIp.getOnlyIp()) + " - " + str(host.assignedIp.getMaskIp()) +"  | gateWay "+  str(host.gateWay.getOnlyIp())   +" --------> " +str(host.fastEthernetPorts[0].portConected().name)+"\n"
         return text
             
           
