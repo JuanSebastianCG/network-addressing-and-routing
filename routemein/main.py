@@ -11,8 +11,11 @@ from Library.RmiSwitchRoutingLib import SwitchRouting as swr
 from Library.ipHandling.RmiIPv4Lib import IPv4 as ip
 
 """ settings """
-from Library.settingDevice.RmiPortManage  import Port as port
-from Library.settingDevice.RmiDHCP  import DhcpEasyIP as dhcpEasyIp 
+from Library.settingDevice.RmiPortManage  import Port as Port
+from Library.settingDevice.RmiDHCP  import DhcpEasyIP  as dhcpEasyIp 
+from Library.settingDevice.RmiDHCP  import helperDhcp  as dhcpHelper
+
+
 from Library.settingDevice.RmiVlan import Vlan
 
 """ devices """
@@ -45,6 +48,7 @@ ipAd = Addressing.addressing(hosts) """
 """ for i in wan: print(i) """
 
 
+
 easyIp = [
     dhcpEasyIp("R1Fa0",
                ip(192,168,10,0,24),
@@ -62,7 +66,7 @@ easyIp = [
 
 """ rd(name of the device, setting [dhcpEasyIp,setting2](opcional) ,serial port ejem: [port("0/0"),port("0/2")](opcional), fasethernet port ejem:  [port("0/0"),port("0/2")](opcional)  ) """
 routers = [
-           RouterD("router0"),
+           RouterD("router0",[dhcpHelper(ip(10,1,1,2,24))]),
            RouterD("router1",[easyIp[0], easyIp[1]]),
            RouterD("ISP"),
         ]

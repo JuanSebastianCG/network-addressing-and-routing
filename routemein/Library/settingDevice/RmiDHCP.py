@@ -1,5 +1,7 @@
-from ast import While
+from ast import If, While
+from http.client import FORBIDDEN
 import imp
+from msilib.schema import Class
 import string
 from tokenize import String
 
@@ -55,5 +57,22 @@ class DhcpEasyIP():
                         return newIp
                 
         return self.initialIp.increaseHost(1)
+    
+
+class helperDhcp:
+    def __init__(self,ipMainRouter ,fastEthernetPorts = None):
+        self.ipMainRouter = ipMainRouter
+        if fastEthernetPorts == None:
+            self.fastEthernetPorts = []
+        else:
+            self.fastEthernetPorts = fastEthernetPorts
+
+    def __str__(self) -> string:
+        text = "---------DhcpEasyIP HELPER: ---------\n" 
+        text += "Main route ip: " + str(self.ipMainRouter) + "\n"
+        if self.fastEthernetPorts != None:
+            for i in self.fastEthernetPorts:
+                text += "FastEthernetPorts whit helper: " + str(i) + "\n"
+        return text
     
   

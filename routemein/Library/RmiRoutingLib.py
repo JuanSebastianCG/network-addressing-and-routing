@@ -1,17 +1,16 @@
 from ast import For
 
-import imp
-from pickle import NONE
-import string
-from telnetlib import IP
 
+import string
 
 from Library.RmiAddressingLib import addressingHandler as addressing
 from Library.ipHandling.RmiIPv4Lib import IPv4 as ip
 
 from Library.devices.RmiRouterDevice import RouterDevice as router
 from Library.devices.RmiHostDevice import HostDevice as host
+
 from Library.settingDevice.RmiDHCP import DhcpEasyIP as dhcpE
+from Library.settingDevice.RmiDHCP import helperDhcp as helperDhcp
 
 
 
@@ -61,6 +60,19 @@ class routingHandler:
                     text += "default-router "+str(setting.gateWay.getOnlyIp())+"\n"
                     text += "dns-server "+str(setting.dns_Server.getOnlyIp())+"\n"
                     text += "exit\n"
+                    
+                if type(setting) == helperDhcp:
+                    if setting.fastEthernetPorts == []:
+                        for port in portFastethernet: 
+                            text += "interface fa"+str(port.name)+"\n"
+                            text += "ip helper-address "+str(setting.ipMainRouter.getOnlyIp())+"\n"
+                            text += "exit\n"
+                    else:
+                        for port in portSerial: 
+                            if port.name in setting.fastEthernetPorts:
+                                text += "interface fa"+str(port.name)+"\n"
+                                text += "ip helper-address "+str(setting.ipMainRouter.getOnlyIp())+"\n"
+                                text += "exit\n"
 
             text += "\n"   
         return text
