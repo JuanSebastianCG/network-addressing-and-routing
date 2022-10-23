@@ -42,7 +42,6 @@ class Device:
     """ returns all port conected """
     def portsConected(self,portConected = []):
         if len(portConected) == 0: portConected = []
-        
         for port in self.fastEthernetPorts:
             if port.isFree == False:
                 portConected.append(port) 

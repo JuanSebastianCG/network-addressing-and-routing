@@ -4,6 +4,7 @@ import string
 
 from Library.devices.RmiDevice import Device
 from Library.settingDevice.RmiPortManage  import Port as port
+from Library.settingDevice.RmiNAT import NAT as nat
 
 
 class RouterDevice(Device):
@@ -16,6 +17,10 @@ class RouterDevice(Device):
         """ add serial ports if the user does not provide them """
         if serialPorts == None: self.serialPorts = [port("0/0"), port("0/1"),port("0/2")]
         else: self.serialPorts = serialPorts
+        
+        for setting in self.settings:
+            if type(setting) == nat:
+                setting.mainDevice = self
             
         super().__init__(name, fastEthernetPorts)
 
@@ -33,8 +38,7 @@ class RouterDevice(Device):
         portConected = []
         for port in self.serialPorts:
             if port.isFree == False:
-                portConected.append(port)
-                
+                portConected.append(port)  
         return super().portsConected(portConected)
     
     def allPorts(self, addPort = []):

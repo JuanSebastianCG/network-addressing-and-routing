@@ -2,6 +2,7 @@ import string
 import random
 from gc import callbacks
 from operator import ge
+from tokenize import String
 from webbrowser import get
 
 
@@ -34,6 +35,19 @@ class IPv4:
     def get_binary_string(self) -> str:
         return bnh.int_to_bin(self.ipV4[0])+bnh.int_to_bin(self.ipV4[1])+bnh.int_to_bin(self.ipV4[2])+bnh.int_to_bin(self.ipV4[3])
    
+    """ Starting from a mask already represented in the form of IP, it obtains the representative number of the mask. """
+    @staticmethod
+    def getMaskFromIp(mask: 'IPv4') -> int:
+        num0 = 0
+        for i in range(3, -1,-1):
+            for j in range(7, -1,-1):
+                if bnh.int_to_bin(mask.ipV4[i])[j] == "0":
+                    num0 += 1
+                else:
+                    break
+        return 32 - num0
+        
+        
     
     """Creates an IP object from a string of an IP in binary. """
     @staticmethod
@@ -153,7 +167,8 @@ class IPv4:
             return 'B'
         elif hosts <= 16777215 and hosts >= 65536:
             return 'A'
-        
+    
+    
             
     def getWildcard(self) -> string:
         ip = ''

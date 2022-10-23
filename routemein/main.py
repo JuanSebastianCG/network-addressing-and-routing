@@ -14,7 +14,7 @@ from Library.ipHandling.RmiIPv4Lib import IPv4 as ip
 from Library.settingDevice.RmiPortManage  import Port as Port
 from Library.settingDevice.RmiDHCP  import DhcpEasyIP  as dhcpEasyIp 
 from Library.settingDevice.RmiDHCP  import helperDhcp  as dhcpHelper
-
+from Library.settingDevice.RmiNAT  import NAT as Nat
 
 from Library.settingDevice.RmiVlan import Vlan
 
@@ -54,28 +54,35 @@ easyIp = [
                ip(192,168,10,0,24),
                [[ip( 192,168,10,1,24),9]],
                ip(192,168,20,254,30),
-               ip(192,168,10,1,30))
+               ip(192,168,10,1,24))
     ,
     dhcpEasyIp("R1Fa1",
                ip(192,168,11,0,24),
                [[ip( 192,168,11,1,25),9]],
                ip(192,168,20,254,30),
-               ip(192,168,11,1,30)),
+               ip(192,168,11,1,24)),
 ]
+
+serverGatewayIp = ip(192,168,20,254,24) 
+nat =  Nat("MY-NAT-POOL", 
+           [ip(209,165,200,241), ip(209,165,200,246)],ip(255,255,255,248),
+           [[serverGatewayIp,ip(209,165,200,254)] ]
+           )
 
 
 """ rd(name of the device, setting [dhcpEasyIp,setting2](opcional) ,serial port ejem: [port("0/0"),port("0/2")](opcional), fasethernet port ejem:  [port("0/0"),port("0/2")](opcional)  ) """
 routers = [
            RouterD("router0",[dhcpHelper(ip(10,1,1,2,24))]),
-           RouterD("router1",[easyIp[0], easyIp[1]]),
+           RouterD("router1",[easyIp[0], easyIp[1], nat]),
            RouterD("ISP"),
         ]
 
 """ hd (name, assigned ip, fasethernet port :  [port("0/0"),port("0/2")] (opcional))"""
 hosts = [HostD("pc0",  easyIp[0].getNextIp(),easyIp[0].gateWay) ,
          HostD("pc1",  easyIp[1].getNextIp(),easyIp[1].gateWay) ,
-         HostD("server0",ip(192,168,20,0,24),ip(192,168,20,254,24)) 
+         HostD("server0",ip(192,168,20,1,24),serverGatewayIp) 
           ]
+
 
 switch = [
     SwitchD("switch0",None,easyIp[0].gateWay),
@@ -108,7 +115,7 @@ fastEthernetConection = [
 """ print(Routing.showHosts(hosts)) """
 print(Routing.basicConfiguration(routers)) 
 """ print(Routing.addressingRipV4(routers))  """
-print(Routing.addressingOSPF(routers)) 
+""" print(Routing.addressingOSPF(routers))  """
 """ print(Routing.addressingRipv2OSPF(routers)) """
 """ print(Routing.addresingStatic(routers,hosts)) """
 

@@ -11,6 +11,7 @@ from Library.devices.RmiHostDevice import HostDevice as host
 
 from Library.settingDevice.RmiDHCP import DhcpEasyIP as dhcpE
 from Library.settingDevice.RmiDHCP import helperDhcp as helperDhcp
+from Library.settingDevice.RmiNAT import NAT as nat
 
 
 
@@ -73,6 +74,18 @@ class routingHandler:
                                 text += "interface fa"+str(port.name)+"\n"
                                 text += "ip helper-address "+str(setting.ipMainRouter.getOnlyIp())+"\n"
                                 text += "exit\n"
+                                
+                if type(setting) == nat:
+                    for staticIp in setting.staticIps :
+                        text += "ip nat inside source static "+str(staticIp[0].getOnlyIp())+" "+str(staticIp[1].getOnlyIp())+"\n"     
+                    text += setting.getNatOutsideInside()
+                    text += "ip nat pool "+str(setting.name)
+                    for ip in setting.publicIps:
+                        text += " "+str(ip.getOnlyIp())
+                    text += " netmask "+str(setting.publicMask.getOnlyIp())+"\n"
+                    
+                    text += "ip access-list extended NAT\n"
+                    
 
             text += "\n"   
         return text
