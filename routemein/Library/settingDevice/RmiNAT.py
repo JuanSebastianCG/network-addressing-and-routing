@@ -27,7 +27,7 @@ class NAT():
     
         
              
-    
+    """ take the initial device and go through the posts assigning them the output they have in front of the nat """
     def getNatOutsideInside(self):
         text = ""
         fastethernetPort  = self.mainDevice.fastEthernetPortsConected()
@@ -56,10 +56,6 @@ class NAT():
             text += "ip nat inside\n"
             text += "exit\n"
                       
-            
-                    
-
-
         return text 
             
                 

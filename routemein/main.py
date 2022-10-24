@@ -48,7 +48,7 @@ ipAd = Addressing.addressing(hosts) """
 """ for i in wan: print(i) """
 
 
-
+"""dhcpEasyIp(name: String, initialIp: ip, [[exclusiveip,fromIpHowMani]], dns: Ip, gateWay)  """
 easyIp = [
     dhcpEasyIp("R1Fa0",
                ip(192,168,10,0,24),
@@ -64,6 +64,7 @@ easyIp = [
 ]
 
 serverGatewayIp = ip(192,168,20,254,24) 
+""" Nat(Name, [publicIp,publicIp,publicIp], maskPublicIp, [[staticIpinternal, staticIpExternal],.. ], ...) """
 nat =  Nat("MY-NAT-POOL", 
            [ip(209,165,200,241), ip(209,165,200,246)],ip(255,255,255,248),
            [[serverGatewayIp,ip(209,165,200,254)] ]
@@ -77,13 +78,15 @@ routers = [
            RouterD("ISP"),
         ]
 
-""" hd (name, assigned ip, fasethernet port :  [port("0/0"),port("0/2")] (opcional))"""
+""" hd (name, assigned ip, gateWay : ip(opcional), fasethernet port :  [port("0/0"),port("0/2")] (opcional))"""
 hosts = [HostD("pc0",  easyIp[0].getNextIp(),easyIp[0].gateWay) ,
          HostD("pc1",  easyIp[1].getNextIp(),easyIp[1].gateWay) ,
          HostD("server0",ip(192,168,20,1,24),serverGatewayIp) 
           ]
 
 
+
+""" switch (name, vlans: vlan, assigned ip, gateWay : ip(opcional), fasethernet port :  [port("0/0"),port("0/2")] (opcional))"""
 switch = [
     SwitchD("switch0",None,easyIp[0].gateWay),
     SwitchD("switch1",None,easyIp[1].gateWay),
@@ -91,14 +94,14 @@ switch = [
 
 
 
-""" wc( dispositivo 1, dispositivo 2 ,assigned ip(red), Area , portDispositivo1(opcional), portDispositivo2(opcional)) """""" connection oRouterDer matters!! """
+""" wc( disConected1, disConected2 ,assigned ip(red), Area , portDispositivo1(opcional), portDispositivo2(opcional)) """""" connection oRouterDer matters!! """
 wanConection = [
                 WanConection(routers[1], routers[0], ip(10,1,1,0,30),0),
                 WanConection(routers[2], routers[1], ip(209,165,200,224,30),0),      
                 ]
 
 
-""" fc( dispositivo1, dispositivo 2, Area ,portDispositivo1(opcional), portDispositivo2(opcionale)) """""" connection order matters!! """
+""" fc( disConected1, disConected2, Area ,portDispositivo1(opcional), portDispositivo2(opcionale)) """""" connection order matters!! """
 fastEthernetConection = [                
                 FastEthernetConection(hosts[2], routers[1],0),
                 

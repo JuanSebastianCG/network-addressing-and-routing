@@ -29,6 +29,7 @@ class binaryNumbersHandler:
             res=binaryNumbersHandler.zerosIp[0:32-len(res)]+res
         return res
     
+    """convert a binary number to an integer"""
     @staticmethod
     def bin_to_int(bin: string) -> int:
         return int(bin, 2)

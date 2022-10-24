@@ -41,6 +41,7 @@ class RouterDevice(Device):
                 portConected.append(port)  
         return super().portsConected(portConected)
     
+    """ return all types of ports whether fastethernet or serial and it does not matter if they are connected """
     def allPorts(self, addPort = []):
         auxArray = addPort
         addPort = [] 

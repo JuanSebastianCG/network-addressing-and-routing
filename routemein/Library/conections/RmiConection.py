@@ -34,7 +34,7 @@ class Conection:
       return text
    
 
-      
+   """ from a given port it is searched if there is one with that same number, it is usually used to search for vlans already limited by ports  """
    def searchPortRange(self,device,portHubication, min, max):
         for port in device.fastEthernetPorts:
             number = port.getJustNumber()
@@ -43,6 +43,7 @@ class Conection:
                 return port
         raise Exception("Error: The device has no free fastEthernet ports or the port name is not correct")
    
+   """ look for a specific port within a given device name """
    def searchPort(self,device,portHubication, portName):
       for port in device.fastEthernetPorts:
          if port.isFree and port.name == portName:
@@ -50,7 +51,7 @@ class Conection:
                return port
       raise Exception("Error: The device has no free fastEthernet ports or the port name is not correct")
          
-    
+   """ selects a free port within the device and assigns it to the connection """
    def selectPorts(self,device,portHubication): 
       for port in device.fastEthernetPorts:
          if port.isFree:
