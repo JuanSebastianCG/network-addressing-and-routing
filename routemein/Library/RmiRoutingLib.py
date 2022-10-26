@@ -1,4 +1,5 @@
 from ast import For
+from pickle import NONE
 
 
 import string
@@ -85,7 +86,12 @@ class routingHandler:
                     text += " netmask "+str(setting.publicMask.getOnlyIp())+"\n"
                     
                     text += "ip access-list extended NAT\n"
+                    if setting.IpSubredAfected != None:
+                        for ipAfectedByNat in setting.IpSubredAfected :
+                            text += "permit ip "+str(ipAfectedByNat.getOnlyIp())+" "+str(ipAfectedByNat.getWildcard())+" any\n"
+                        text += "exit\n"
                     
+                    text += "ip nat inside source list NAT pool "+str(setting.name)+"\n"
 
             text += "\n"   
         return text

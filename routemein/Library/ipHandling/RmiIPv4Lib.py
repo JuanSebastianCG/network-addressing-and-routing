@@ -1,3 +1,4 @@
+from hashlib import new
 import string
 import random
 from gc import callbacks
@@ -30,7 +31,20 @@ class IPv4:
         elif (self.ipV4[3] > 255 or self.ipV4[3] < 0) or (not isinstance(self.ipV4[3], int)):
             raise ValueError(error+'1. Value: '+str(self.ipV4[3]))
         
-        
+    @staticmethod
+    def getIpMaskFromMask(mask: int) -> string:
+        ip = IPv4(0,0,0,0,mask)
+        limit =  mask//8 
+        for i in range(4):
+            if i == limit:
+                ip.ipV4[i] = bnh.bin_to_int(bnh.ones[:mask - limit*8]+bnh.zeros[:8-(mask - limit*8)])
+            elif i<limit:
+                ip.ipV4[i] = 255
+            else:
+                ip.ipV4[i] = 0 
+
+        return ip
+    
     """Returns the full IP in binary as a string"""
     def get_binary_string(self) -> str:
         return bnh.int_to_bin(self.ipV4[0])+bnh.int_to_bin(self.ipV4[1])+bnh.int_to_bin(self.ipV4[2])+bnh.int_to_bin(self.ipV4[3])
@@ -201,3 +215,4 @@ class IPv4:
             if i < 3:
                 ip += '.'  
         return ip
+    

@@ -9,11 +9,12 @@ from Library.ipHandling.RmiIPv4Lib import IPv4 as ip
 
 class NAT():
 
-    def __init__(self, name: string  ,publicIps, publicMask: ip ,staticIps = None, outSideNat = None ):
+    def __init__(self, name: string  ,publicIps, publicMask: ip ,IpSubredAfected = None, staticIps = None, outSideNat = None ):
         self.name = name
         self.mainDevice = None
         self.publicIps = publicIps
         self.publicMask = publicMask
+        self.IpSubredAfected = IpSubredAfected
         
         if staticIps == None:
             self.staticIps = []
@@ -70,6 +71,11 @@ class NAT():
             text += "   " + str(publicIp) + "\n"
         text += "\n"
         
+        text += "Public Ip Subred Afected: \n"
+        for subred in self.IpSubredAfected:
+            text += "    " + str(subred) + "\n"
+        
+        text += "\n"
         text += "Static Ips:\n"
         for staticIp in self.staticIps:
             text += "ip:" + str(staticIp[0]) +" -public- "+str(staticIp[1])+ "\n"
