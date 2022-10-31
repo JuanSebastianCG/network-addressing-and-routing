@@ -1,0 +1,19 @@
+=================== Adressing===============================
+
+""" hosts = [30,550,2950] 
+hosts =  sorted(hosts, reverse=True)
+ """
+""" addressing(hosts, ip (opcional)) """
+""" ipAd = Addressing.addressing(hosts,ip(192,168,10,0,0))
+ipAd = Addressing.addressing(hosts) """
+
+""" add one host to each ip """
+""" ipAd = Addressing.addAHostToIps(ipAd) """
+
+"""  wanGenerator(wan numbers of wan directions, base ip (optional), 4(number of hosts per wan))"""
+""" wan = Addressing.wanGenerator(2,ip(220,11,10,0,29)) """
+
+""" print(adr.showAddressing(ipAd,hosts)) """
+""" for i in wan: print(i) """
+
+===================================================
